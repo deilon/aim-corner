@@ -122,7 +122,7 @@
                       </div>
 
                       <div class="d-flex mt-4">
-                          <button class="post-metrics-btn me-2"><i class="bi bi-chat-left-dots" style="font-size: 1rem"></i> 334 Comments</button>
+                          <button class="post-metrics-btn me-2"><i class="bi bi-chat-left-dots" style="font-size: 1rem"></i> {{count($post->comment)}} Comments</button>
                           <button class="post-metrics-btn"><i class="bi bi-bookmark" style="font-size: 1rem"></i> Save</button>
                       </div>
 
