@@ -18,10 +18,10 @@ class PostFactory extends Factory
     {
         return [
             "title" => $this->faker->word(), //required
-            "text" => $this->faker->paragraph(2),
-            // "image" => "post.jpg",
+            // "text" => $this->faker->paragraph(2),
+            "image" => "post.jpg",
             // "link" => "https://lms.laverdad.edu.ph",
-            "post_type" => "single_post"
+            "post_type" => "image_post"
         ];
     }
 }

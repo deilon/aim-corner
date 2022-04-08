@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
             'photo' => 'profile.jpg',
-            'role' => 'admin',
+            'role' => 'instructor',
             'remember_token' => Str::random(10),
         ];
     }
