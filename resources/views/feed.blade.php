@@ -38,10 +38,10 @@
           <div class="collapse navbar-collapse" id="navbarSubNav2">
             <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-evenly">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-grid-fill"></i> Grid View</a>
+                <a class="nav-link active" id="gridView" aria-current="page" style="cursor: pointer"><i class="bi bi-grid-fill"></i> Grid View</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-justify"></i> List View</a>
+                <a class="nav-link active" id="listView" aria-current="page" style="cursor: pointer"><i class="bi bi-justify"></i> List View</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{{ url('feed/admin/posts') }}"><i class="bi bi-square-fill" style="color: #E6E4FF"></i> College Coordinator</a>
@@ -60,11 +60,11 @@
 
     <section class="mt-4">
         <div class="container">
-            <div class="row" data-masonry='{"percentPosition": true }'>
+            <div class="row"> <!-- add data-masonry='{"percentPosition": true }' for masonry effect but bug will occur in list view -->
 
               @foreach ($posts as $post)
 
-                <div class="col-md-6 col-lg-6 mb-4">
+                <div class="post-card col-md-6 col-lg-6 mb-4">
 
                   @if($post->post_type == "image_post")
                     <div class="post-img" style="background-image: url('{{asset('storage/images/'. $post->image)}}');">
@@ -135,5 +135,13 @@
         </div>
     </section> 
     
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+      $( "#listView" ).click(function() {
+        $('.post-card').addClass('offset-lg-3 offset-md-3');
+      });      
+      $( "#gridView" ).click(function() {
+        $('.post-card').removeClass("offset-lg-3 offset-md-3");
+      });
+    </script>
 @include('bottom')
