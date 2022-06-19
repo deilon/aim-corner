@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/feed', [FeedController::class, 'index'])->middleware('auth');
+Route::get('/feed/{post}/posts', [FeedController::class, 'index'])->middleware('auth');
 
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
 Route::post('/profile/update', [UserController::class, 'profileUpdate'])->middleware('auth');

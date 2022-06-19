@@ -44,13 +44,13 @@
                 <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-justify"></i> List View</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-square-fill" style="color: #E6E4FF"></i> College Coordinator</a>
+                <a class="nav-link active" aria-current="page" href="{{ url('feed/admin/posts') }}"><i class="bi bi-square-fill" style="color: #E6E4FF"></i> College Coordinator</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-square-fill" style="color: #FFE9E9"></i> College Instructors</a>
+                <a class="nav-link active" aria-current="page" href="{{ url('feed/instructor/posts') }}"><i class="bi bi-square-fill" style="color: #FFE9E9"></i> College Instructors</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-square-fill" style="color: #CDF6BC"></i> Students</a>
+                <a class="nav-link active" aria-current="page" href="{{ url('feed/student/posts') }}"><i class="bi bi-square-fill" style="color: #CDF6BC"></i> Students</a>
               </li>
             </ul>
           </div>
