@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('country', 100);
             $table->string('photo', 255);
             $table->string('course', 100)->nullable();
-            $table->string('role', 100);
+            $table->enum('role', ['admin', 'instructor', 'student']);
             $table->rememberToken();
             $table->timestamps();
         });
