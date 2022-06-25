@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('text')->nullable();
             $table->string('image')->nullable();
             $table->string('link')->nullable();
-            $table->string('post_type');
+            $table->enum('type', ['title', 'photo', 'link']);
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-8 col-lg-8 col-xl-8 offset-md-2 offset-lg-2 offset-xl-2">
 
-                @if($post->post_type == "image_post")
+                @if($post->type == "photo")
                     <div class="post-img" style="background-image: url('{{asset('storage/images/'. $post->image)}}');">
                         <div class="post-backdrop-img"></div>
                     </div>
@@ -53,16 +53,16 @@
 
                           <!-- post text/img/link -->
                           <div>
-                            @if ($post->post_type == "single_post")
+                            @if ($post->type == "title")
                               <p style="font-size: 39px;">
                                 {{$post->title}}
                               </p>
                               {{$post->text}}  
-                            @elseif ($post->post_type == "image_post")
+                            @elseif ($post->type == "photo")
                               <p class="mt-2" style="font-size: 17px;">
                                 {{$post->title}}
                               </p>
-                            @elseif ($post->post_type == "link_post")
+                            @elseif ($post->type == "link")
                               <p class="mt-2" style="font-size: 17px;">
                                 {{$post->title}}
                               </p>

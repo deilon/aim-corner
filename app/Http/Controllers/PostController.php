@@ -33,16 +33,17 @@ class PostController extends Controller
         $post = new Post;
         $post->user_id = $user->id;
         $post->title = $request['title'];
+
         if ($request['link'] != null) {
             $post->link = $request['link'];
-            $post->post_type = "link_post";
+            $post->type = "link";
         }
         elseif ($request->file("image") != null) {
             $post->image = $photo_name;
-            $post->post_type = "image_post";
+            $post->type = "photo";
         } else {
             $post->text = $request['text'];
-            $post->post_type = "single_post";
+            $post->type = "title";
         }
         $post->save();
         return back()->with('status', 'A post has been made.');        
