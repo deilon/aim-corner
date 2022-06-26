@@ -46,7 +46,10 @@ class PostController extends Controller
             $post->type = "title";
         }
         $post->save();
-        return back()->with('status', 'A post has been made.');        
+
+        return ($request->file("image") != null) ? 
+        back()->with('status', 'A post has been made.')->with('post_upload', 'The photo attached to the post has been uploaded but due to free hosting limitation we are unable to preview your photo at the moment.') : 
+        back()->with('status', 'A post has been made.');        
     }
 
 

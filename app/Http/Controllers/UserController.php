@@ -40,6 +40,7 @@ class UserController extends Controller
         if ($request->file("photo") != null) {
             $photo_name = time().'_'.$request->file("photo")->getClientOriginalName();
             $request->file('photo')->storeAs('public/images/', $photo_name);
+            
         }
 
         $user = Auth::user();
@@ -52,6 +53,10 @@ class UserController extends Controller
             $user->photo = $photo_name;
         }
         $user->save();
-        return back()->with('status','Profile Updated');
+
+        return ($request->file("photo") != null) ? 
+        back()->with('status','Profile Updated')->with('dp_upload', 'The profile photo has been uploaded but due to free hosting limitation we are unable to preview your photo at the moment.') :
+        back()->with('status','Profile Updated');
+        ;
     }
 }

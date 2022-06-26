@@ -108,4 +108,5 @@
     </div>
 </section>
 
+@include('scripts')
 @include('bottom')

@@ -135,13 +135,14 @@
         </div>
     </section> 
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script>
+@include('scripts')
+<script>
       $( "#listView" ).click(function() {
         $('.post-card').addClass('offset-lg-3 offset-md-3');
       });      
       $( "#gridView" ).click(function() {
         $('.post-card').removeClass("offset-lg-3 offset-md-3");
       });
-    </script>
+</script>
+
 @include('bottom')

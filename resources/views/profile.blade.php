@@ -108,4 +108,32 @@
             </form>
         </div>
     </section>
+
+    @if (session('dp_upload'))
+    <!-- User photo upload info -->
+    <div class="modal" id="user-photo-upload" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Profile photo upload</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>{{ session('dp_upload') }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endif
+
+@include('scripts')
+<script>
+    $(window).on('load', function() {
+      $('#user-photo-upload').modal('show');
+    });
+</script>
+
 @include('bottom')
