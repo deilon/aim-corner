@@ -67,7 +67,7 @@
                 <div class="post-card col-md-6 col-lg-6 mb-4">
 
                   @if($post->type == "photo")
-                    <div class="post-img" style="background-image: url('{{asset('storage/images/'. $post->image)}}');">
+                    <div class="post-img" style="background-image: url('/images/post_photo.png');">
                         <div class="post-backdrop-img"></div>
                     </div>
                   @endif

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col">
                     <div class="profile-header d-flex">
-                        <div class="profile-image me-3" style="background-image: url('{{ asset('storage/images/' . $user->photo) }}');"></div>
+                        <div class="profile-image me-3" style="background-image: url('/images/user_photo.png');"></div>
                         <div class="profile-name d-flex flex-column align-self-end pb-3 me-auto">
                           <p class="name">{{$user->firstname}} {{$user->lastname}}</p> 
                           <span class="yr-course">

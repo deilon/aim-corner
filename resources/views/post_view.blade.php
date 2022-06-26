@@ -18,7 +18,7 @@
             <div class="col-md-8 col-lg-8 col-xl-8 offset-md-2 offset-lg-2 offset-xl-2">
 
                 @if($post->type == "photo")
-                    <div class="post-img" style="background-image: url('{{asset('storage/images/'. $post->image)}}');">
+                    <div class="post-img" style="background-image: url('/images/post_photo.png');">
                         <div class="post-backdrop-img"></div>
                     </div>
                 @endif
