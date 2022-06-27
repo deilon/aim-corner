@@ -155,7 +155,7 @@
 
 @if (session('post_upload'))
 <!-- User photo upload info -->
-<div class="modal" id="user-post-upload" tabindex="-1">
+<div class="modal fade" id="user-post-upload" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
