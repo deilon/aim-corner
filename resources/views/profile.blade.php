@@ -1,4 +1,4 @@
-@include('top')
+@include('layouts/top')
     <section>
         <div class="profile-banner container-fluid"></div>
         <div class="container">
@@ -136,4 +136,4 @@
     });
 </script>
 
-@include('bottom')
+@include('layouts/bottom')

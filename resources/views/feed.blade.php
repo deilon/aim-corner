@@ -1,4 +1,4 @@
-@include('top')
+@include('layouts/top')
 
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -145,4 +145,4 @@
       });
 </script>
 
-@include('bottom')
+@include('layouts/bottom')
