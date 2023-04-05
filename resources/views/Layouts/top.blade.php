@@ -26,21 +26,8 @@
               <li class="nav-item">
                 <a class="nav-link" href="/profile">Profile</a>
               </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-              </li> -->
-              <li class="nav-item"  style="color: black !important">
-                <span class="nav-link text-decoration-none" style="color: black !important">
-                  <form method="POST" action="{{ route('logout') }}">
-                      @csrf
-
-                      <x-responsive-nav-link :href="route('logout')"
-                              onclick="event.preventDefault();
-                                          this.closest('form').submit();">
-                          {{ __('Log Out') }}
-                      </x-responsive-nav-link>
-                  </form>
-                </span>
+              <li class="nav-item">
+                <a class="nav-link text-danger" href="/logout">Logout</a>
               </li>
             </ul>
             <a href="/add/post" class="btn btn-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add Post"><i class="bi bi-plus-lg"></i></a>

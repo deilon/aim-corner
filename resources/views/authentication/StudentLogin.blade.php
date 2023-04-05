@@ -19,10 +19,11 @@
                         <h4 class="align-self-center text-center">📚 Student Login Form</h4>
                         <img src="{{ asset('images/logo-dark.png') }}" alt="logo" class="img-responsive" height="70px">
                     </div>
-                    <form>
+                    <form method="POST" action="/student/login">
+                        @csrf
                         <div class="mb-3">
-                            <label for="userNameEmail" class="form-label">Email address or username</label>
-                            <input type="text" class="form-control" name="userNameEmail" id="userNameEmail">
+                            <label for="email" class="form-label">Email address or username</label>
+                            <input type="text" class="form-control" name="email" id="email">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
