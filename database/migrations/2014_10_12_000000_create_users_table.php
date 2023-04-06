@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('email', 100)->unique();
             $table->string('password', 255);
             $table->string('firstname', 100);
+            $table->string('middlename', 100)->nullable();
             $table->string('lastname', 100);
-            $table->string('city', 100);
-            $table->string('country', 100);
             $table->string('photo', 255);
             $table->string('course', 100)->nullable();
+            $table->string('country', 100);
+            $table->string('city', 100);
             $table->enum('role', ['admin', 'instructor', 'student']);
             $table->rememberToken();
             $table->timestamps();
