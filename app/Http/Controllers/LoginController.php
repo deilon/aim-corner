@@ -9,17 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     
-    public function studentLogin() {
-        return view('authentication/StudentLogin');
-    }
-    public function instructorLogin() {
-        return view('authentication/InstructorLogin');
-    }
-    public function adminLogin() {
-        return view('authentication/AdminLogin');
+    public function login() {
+        return view('authentication/Login');
     }
 
-    public function authenticateStudent(Request $request) {
+    public function authenticateUsers(Request $request) {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],

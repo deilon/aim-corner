@@ -21,25 +21,20 @@ use App\Http\Controllers\CommentController;
 
 
 Route::middleware(['guest'])->group(function() {
-    // Student Authentication
-    Route::get('/', [LoginController::class, 'studentLogin']);
-    Route::get('student/login', [LoginController::class, 'studentLogin'])->name('student.login');
-    Route::post('student/login', [LoginController::class, 'authenticateStudent']);
-    Route::get('student/register', [RegisterController::class, 'studentRegister']);
-
-    // Instructor Authentication
-    Route::get('instructor/login', [LoginController::class, 'instructorLogin']);
-    Route::get('instructor/register', [RegisterController::class, 'instructorRegister']);
+    Route::get('/', [LoginController::class, 'login']);
+    Route::get('login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'authenticateUsers']);
     
-    // Admin Authentication
-    Route::get('admin/login', [LoginController::class, 'adminLogin']);
+    // Registrations
+    Route::get('student/register', [RegisterController::class, 'studentRegister']);
+    Route::get('instructor/register', [RegisterController::class, 'instructorRegister']);
 });
 
 // Logout for all users role
 Route::get('logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('/feed/{post}/posts', [FeedController::class, 'index'])->middleware('auth');
+    Route::get('/feed/{post}/posts', [FeedController::class, 'index']);
     Route::get('/profile', [UserController::class, 'profile']);
     Route::post('/profile/update', [UserController::class, 'profileUpdate']);
     
@@ -48,5 +43,3 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/view/post/{id}', [PostController::class, 'viewPost']);
     Route::post('/add/comment', [CommentController::class, 'createComment']);
 });
-
-require __DIR__.'/auth.php';

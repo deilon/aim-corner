@@ -11,18 +11,19 @@
     <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
 </head>
 <body>
-    <section class="d-flex align-items-center" style="height:100vh">
+    <section class="d-flex align-items-center" style="height: 100vh">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col col-lg-6 offset-lg-3">
                     <div class="d-flex mb-5 justify-content-between">
-                        <h4 class="align-self-center text-center">🏫 Admin Login Form</h4>
+                        <h4 class="align-self-center text-center">Welcome to Aim Corner</h4>
                         <img src="{{ asset('images/logo-dark.png') }}" alt="logo" class="img-responsive" height="70px">
                     </div>
-                    <form>
+                    <form method="POST" action="/login">
+                        @csrf
                         <div class="mb-3">
-                            <label for="userNameEmail" class="form-label">Email address or username</label>
-                            <input type="text" class="form-control" name="userNameEmail" id="userNameEmail">
+                            <label for="email" class="form-label">Email address or username</label>
+                            <input type="text" class="form-control" name="email" id="email">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
