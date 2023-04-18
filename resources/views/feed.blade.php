@@ -161,6 +161,5 @@
 
   </div>
 </section>
-    
-@include('scripts')
+
 @include('Layouts.bottom')

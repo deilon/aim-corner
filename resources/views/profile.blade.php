@@ -1,139 +1,89 @@
 @include('layouts/top')
-    <section>
-        <div class="profile-banner container-fluid"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="profile-header d-flex">
-                        <div class="profile-image me-3" style="background-image: url('/images/user_photo.png');"></div>
-                        <div class="profile-name d-flex flex-column align-self-end pb-3 me-auto">
-                          <p class="name">{{$user->firstname}} {{$user->lastname}}</p> 
-                          <span class="yr-course">
-                            @if($user->role == "student")
-                              {{$user->course}}
-                            @else
-                              {{$user->role}}
-                            @endif
-                          </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="mt-5 mb-5">
-        <div class="container">
-            <form method="POST" action="/profile/update" enctype="multipart/form-data">
-                @csrf
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label fw-bold">Username</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="username" class="form-control-plaintext" value="{{$user->username}}">
-                    </div>
-                    @error('username')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label fw-bold">First name</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="firstname" class="form-control-plaintext" value="{{$user->firstname}}">
-                    </div>
-                    @error('firstname')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label fw-bold">Last name</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="lastname" class="form-control-plaintext" value="{{$user->lastname}}">
-                    </div>
-                    @error('lastname')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">Email</label>
-                    <div class="col-sm-10">
-                      <input type="text" disabled name="email" class="form-control-plaintext" id="staticLastname" value="{{$user->email}}">
-                    </div>
-                </div>
+<div class="profile-body bg-white py-10">
 
-                <br><div class="divider mt-3 mb-3 d-block"></div><br>
-                
-                <div class="mb-3 row">
-                    <label for="staticCityTown" class="col-sm-2 col-form-label fw-bold">City / Town</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="city" class="form-control-plaintext" id="staticCityTown" value="{{$user->city}}">
-                    </div>
-                    @error('city')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 row">
-                    <label for="staticCountry" class="col-sm-2 col-form-label fw-bold">Country</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="country" class="form-control-plaintext" id="staticCountry" value="{{$user->country}}">
-                    </div>
-                    @error('country')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <!-- <div class="mb-3 row">
-                    <label for="staticInterests" class="col-sm-2 col-form-label fw-bold">Interests</label>
-                    <div class="col-sm-10">
-                      <input type="text" readonly class="form-control-plaintext" id="staticInterests" value="Interests goes here">
-                    </div>
-                </div> -->
-                <div class="mb-3 row">
-                    <label for="staticProfilePhoto" class="col-sm-2 col-form-label fw-bold">Profile Photo</label>
-                    <div class="col-sm-10">
-                      <input type="file" name="photo" class="form-control-plaintext" id="staticProfilePhoto">
-                    </div>
-                    @error('photo')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 row">
-                  <div class="col-12">
-                    <input type="submit" name="Update" class="btn btn-success">
-                  </div>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    @if (session('dp_upload'))
-    <!-- User photo upload info -->
-    <div class="modal fade" id="user-photo-upload" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Profile photo upload</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>{{ session('dp_upload') }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
-          </div>
-        </div>
+  <!-- Profile pic, name -->
+  <div class="container mx-auto px-6">
+    <d class="flex items-center">
+      <img src="{{asset('images/user_photo.png')}}" width="163" alt="user photo">
+      <div class="flex flex-col space-y-2 profile-details ms-5">
+        <h1 class="text-2xl font-medium">FirstName LastName</h1>
+        <span class="user-role-title font-medium">Administrator</span>
+        <a href="#" id="change-pass" class="text-red-500 font-medium hover:underline">Change password <i class="bi bi-pencil-square"></i></a>
+        <a href="#" id="edit-profile" class="text-green-500 font-medium hover:underline hidden">Update profile <i class="bi bi-pencil-square"></i></a>
       </div>
-    </div>
-    @endif
+    </d>
+  </div>
 
-@include('scripts')
-<script>
-    $(window).on('load', function() {
-      $('#user-photo-upload').modal('show');
-    });
-</script>
+  <!-- Basci info -->
+  <div class="container mx-auto mt-10 px-6 profile-edit">
+    <div class="w-7/12">
+      <form action="">
+        <div class="flex flex-col">
+          <!-- User info -->
+          <div class="input-and-label mb-10">
+            <label for="firstname" class="font-medium">First name</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="firstname" id="firstname">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="lastname" class="font-medium">Last name</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="lastname" id="lastname">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="middlename" class="font-medium">Middle name</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="middlename" id="middlename">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="email" class="font-medium">Email</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="email" id="email">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="username" class="font-medium">Username</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="username" id="username">
+          </div> <br> <br>
+
+          <!-- Location -->
+          <div class="input-and-label mb-10">
+            <label for="city" class="font-medium">City / Town</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="city" id="city">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="country" class="font-medium">Country</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="country" id="country">
+          </div>
+          <button type="submit" class="bg-green-700 py-2 font-bold text-white rounded">Update Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Change password -->
+  <div class="container mx-auto mt-10 px-6 hidden change-pass-edit">
+    <div class="w-7/12">
+      <form action="">
+        <div class="flex flex-col">
+          <!-- User info -->
+          <div class="input-and-label mb-10">
+            <label for="currentpassword" class="font-medium">Current password</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="currentpassword" id="currentpassword">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="newpassword" class="font-medium">New password</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="newpassword" id="newpassword">
+          </div>
+          <div class="input-and-label mb-10">
+            <label for="confirmpassword" class="font-medium">Confirm new password</label> <br>
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="confirmpassword" id="confirmpassword">
+          </div>
+          <button type="submit" class="bg-red-700 py-2 font-bold text-white rounded">Change Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+</div>
 
 @include('layouts/bottom')
