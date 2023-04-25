@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,10 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/add/post', [PostController::class, 'createPost']);
     Route::get('/view/post/{id}', [PostController::class, 'viewPost']);
     Route::post('/add/comment', [CommentController::class, 'createComment']);
+
+    Route::get('/dashboard/posts', [DashboardController::class, 'posts']);
+    Route::get('/dashboard/comments', [DashboardController::class, 'comments']);
+    Route::get('/dashboard/saved', [DashboardController::class, 'saved']);
+    Route::get('/dashboard/upvoted', [DashboardController::class, 'upvoted']);
+    Route::get('/dashboard/downvoted', [DashboardController::class, 'downvoted']);
 });

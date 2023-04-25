@@ -1,6 +1,6 @@
 @include('layouts/top')
 
-<div class="profile-body bg-white py-10">
+<div class="profile-body py-10">
 
   <!-- Profile pic, name -->
   <div class="container mx-auto px-6">

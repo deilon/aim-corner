@@ -24,7 +24,7 @@
         <a href="#" class="mr-5"><img src="http://localhost:8000/images/logo-dark.svg" alt="logo" width="60"></a>
         <a href="feed/all/posts" class="border-b-2 border-black py-2">Home</a>
         <a href="/profile">Profile</a>
-        <a href="/dashboard">Dashboard</a>
+        <a href="/dashboard/posts">Dashboard</a>
         <a href="/control-panel">Control panel</a>
       </div>
 
