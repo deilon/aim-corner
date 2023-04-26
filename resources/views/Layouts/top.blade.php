@@ -38,7 +38,7 @@
             </span>
               <i class="bi bi-caret-down"></i>
           </button>
-          <div class="absolute hidden flex flex-col shadow-2xl bg-white border border-slate-300 py-5 rounded w-full acct-dropdown-content">
+          <div class="absolute hidden flex flex-col shadow-2xl bg-white border border-slate-300 py-5 rounded w-full acct-dropdown-content z-40">
             <a href="/logout" class="block p-3 bg-gray-100 hover:bg-gray-200 hover:cursor-pointer">Sign out</a>
           </div>
         </div>

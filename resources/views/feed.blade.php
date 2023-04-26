@@ -81,7 +81,7 @@
         <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">Deilon Cutamora</a></div>
         
         <!-- Post title -->
-        <div class="post-title font-semibold text-xl">This is the title of this post. A post without text and this is quite long and im not sure where to end it. This is the title of this post. A post wit ... See more</div>
+        <div class="post-title font-semibold text-xl"><a href="{{ url('view/post/1') }}">Hi This is the title of this post. A post without text and this is quite long and im not sure where to end it. This is the title of this post. A post wit ... See more</a> </div>
         
         <!-- Post description text -->
         <div class="post-description font-medium mt-3">This is the description text of the post and this can get longer. this is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. asdadsasdfasdfasd ... <span class="font-semibold">See more</span></div>
