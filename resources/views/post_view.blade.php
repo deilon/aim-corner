@@ -1,4 +1,4 @@
-@include('top')
+@include('layouts/top')
 
 @if (session('status'))
 <section class="mt-4">
@@ -109,4 +109,4 @@
 </section>
 
 @include('scripts')
-@include('bottom')
+@include('layouts/bottom')

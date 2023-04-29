@@ -55,7 +55,7 @@ class PostController extends Controller
 
     public function viewPost($post_id) {
         $data['post'] = Post::find($post_id);
-        return view("post_view", $data);
+        return view("post_show", $data);
     }
 
 }

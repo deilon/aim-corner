@@ -1,148 +1,165 @@
-@include('top')
+@include('Layouts.top')
 
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-          <div class="collapse navbar-collapse" id="navbarSubNav">
-            <ul class="navbar-nav interests-nav d-flex flex-row flex-wrap justify-content-evenly">
-              <li class="">
-                <a class="nav-link" aria-current="page" href="#">For You</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active-interests-nav" href="#">All</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Mathematics</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Technology</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Social</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Literature</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Science</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Psychology</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+<section id="feed-nav" class="mt-5 font-medium">
+  <div class="container mx-auto px-6">
+    <div class="flex items-center space-x-10 bg-white border border-slate-300 rounded-md px-6">
+      <a href="#" class="py-5 pe-2 border-b-2 border-black"><i class="bi bi-house-fill mr-2"></i> For you</a>
+      <a href="#" class="py-5 pe-2"><i class="bi bi-asterisk mr-2"></i> Show all</a>
+      <a href="#" class="py-5 pe-2"><i class="bi bi-people-fill mr-2"></i> Following</a>
+      <a href="#" class="py-5 pe-2"><i class="bi bi-mortarboard-fill mr-2"></i> Students</a>
+      <a href="#" class="py-5 pe-2"><i class="bi bi-person-fill mr-2"></i> Instructors</a>
+      <a href="#" class="py-5 pe-2"><i class="bi bi-person-badge-fill mr-2"></i> Administrators</a>
+    </div>
+  </div>
+</section>
 
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-          <div class="collapse navbar-collapse" id="navbarSubNav2">
-            <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-evenly">
-              <li class="nav-item">
-                <a class="nav-link active" id="gridView" aria-current="page" style="cursor: pointer"><i class="bi bi-grid-fill"></i> Grid View</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" id="listView" aria-current="page" style="cursor: pointer"><i class="bi bi-justify"></i> List View</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url('feed/admin/posts') }}"><i class="bi bi-square-fill" style="color: #E6E4FF"></i> College Coordinator</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url('feed/instructor/posts') }}"><i class="bi bi-square-fill" style="color: #FFE9E9"></i> College Instructors</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url('feed/student/posts') }}"><i class="bi bi-square-fill" style="color: #CDF6BC"></i> Students</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-
-    <section class="mt-4">
-        <div class="container">
-            <div class="row"> <!-- add data-masonry='{"percentPosition": true }' for masonry effect but bug will occur in list view -->
-
-              @foreach ($posts as $post)
-
-                <div class="post-card col-md-6 col-lg-6 mb-4">
-
-                  @if($post->type == "photo")
-                    <div class="post-img" style="background-image: url('/images/post_photo.png');">
-                        <div class="post-backdrop-img"></div>
-                    </div>
-                  @endif
-
-                  @if ($post->user->role == "admin")
-                    <div class="light-blue p-4 clearfix" style="border-radius: 8px" onclick="location.href='/view/post/{{$post->id}}'">  
-                  @elseif ($post->user->role == "instructor")
-                    <div class="light-red p-4 clearfix" style="border-radius: 8px" onclick="location.href='/view/post/{{$post->id}}'">
-                  @elseif ($post->user->role == "student")
-                    <div class="light-green p-4 clearfix" style="border-radius: 8px" onclick="location.href='/view/post/{{$post->id}}'">
-                  @endif
-                  
-
-                      <div class="d-flex" style="color: #828080; font-family: 'Raleway', sans-serif; font-size: 500;">
-                          <p>Posted by <span class="text-decoration-underline">{{$post->user->firstname}} {{$post->user->lastname}} ( {{$post->user->role}} )</span></p>
-                          <span class="ms-auto" style="color: #828080; font-family: 'Segoe UI', sans-serif;">13h ago</span>
-                      </div>
-
-                      <!-- post content -->
-                      <div class="post-content bg-white p-3" style="--bs-bg-opacity: .38; border-radius: 8px; height: 180px;">
-                          
-                          <!-- Vote button -->
-                          <div class="d-flex flex-column float-start me-4">
-                              <button style="background: transparent; border: none;">
-                                  <i class="bi bi-caret-up" style="font-size: 2rem; color: #707070;"></i>
-                              </button>
-                              <p class="vote-count text-center">445</p>
-                              <button style="background: transparent; border: none;">
-                                  <i class="bi bi-caret-down" style="font-size: 2rem; color: #707070;"></i>
-                              </button>              
-                          </div>
-
-                          <!-- post text/img/link -->
-                          <div>
-                            @if ($post->type == "title")
-                              <p style="font-size: 39px;">
-                                {{$post->title}}
-                              </p>
-                              {{$post->text}}  
-                            @elseif ($post->type == "photo")
-                              <p class="mt-2" style="font-size: 17px;">
-                                {{$post->title}}
-                              </p>
-                            @elseif ($post->type == "link")
-                              <p class="mt-2" style="font-size: 17px;">
-                                {{$post->title}}
-                              </p>
-                              <a href="{{$post->link}}">{{$post->link}}</a>
-                            @endif
-                          </div>
-
-                      </div>
-
-                      <div class="d-flex mt-4">
-                          <button class="post-metrics-btn me-2"><i class="bi bi-chat-left-dots" style="font-size: 1rem"></i> {{count($post->comment)}} Comments</button>
-                          <button class="post-metrics-btn"><i class="bi bi-bookmark" style="font-size: 1rem"></i> Save</button>
-                      </div>
-
-                  </div>
-                </div>
-              @endforeach
-
-            </div>
-        </div>
-        </div>
-    </section> 
+<section id="feed-posts" class="mt-5">
+  <div class="container mx-auto px-6">
     
-@include('scripts')
-<script>
-      $( "#listView" ).click(function() {
-        $('.post-card').addClass('offset-lg-3 offset-md-3');
-      });      
-      $( "#gridView" ).click(function() {
-        $('.post-card').removeClass("offset-lg-3 offset-md-3");
-      });
-</script>
+    <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
+      <span class="absolute -top-2 right-5 user-role-post-label user-role-green"></span>
+      <div class="vote-controls flex flex-col items-center py-10 px-5">
+        <button class="flex items-center"><i class="bi bi-caret-up"></i></button>
+        <div class="vote-count font-semibold">1004</div>
+        <button class="flex items-center"><i class="bi bi-caret-down"></i></button>
+      </div>
+      <div class="post-details py-7 pe-7">
+        <!-- Post user name -->
+        <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">Deilon Cutamora</a></div>
+        
+        <!-- Post title -->
+        <div class="post-title font-semibold text-xl">This is the title of this post. A post without text and this is quite long and im not sure where to end it. This is the title of this post. A post wit ... See more</div>
+        
+        <!-- Post metrics -->
+        <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
+          <div class="comments"><a href="#"><i class="bi bi-chat-square-dots mr-1"></i> 19 Comments</a></div>
+          <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
+          <div class="time"><i class="bi bi-clock mr-1"></i> 21h ago</div>
+          <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
+        </div>
 
-@include('bottom')
+      </div>
+    </div>
+
+    <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
+      <span class="absolute -top-2 right-5 user-role-post-label user-role-red"></span>
+      <div class="vote-controls flex flex-col items-center py-10 px-5">
+        <button class="flex items-center"><i class="bi bi-caret-up"></i></button>
+        <div class="vote-count font-semibold">1004</div>
+        <button class="flex items-center"><i class="bi bi-caret-down"></i></button>
+      </div>
+      <div class="post-details py-7 pe-7">
+        <!-- Post user name -->
+        <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">Deilon Cutamora</a></div>
+        
+        <!-- Post title -->
+        <div class="post-title font-semibold text-xl">This is the title of this post. A post without text and this is quite long and im not sure where to end it. This is the title of this post. A post wit ... See more</div>
+        
+        <!-- Post description text -->
+        <div class="post-description font-medium mt-3">This is the description text of the post and this can get longer. this is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. asdadsasdfasdfasd ... <span class="font-semibold">See more</span></div>
+
+        <!-- Post metrics -->
+        <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
+          <div class="comments"><a href="#"><i class="bi bi-chat-square-dots mr-1"></i> 19 Comments</a></div>
+          <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
+          <div class="time"><i class="bi bi-clock mr-1"></i> 21h ago</div>
+          <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
+      <span class="absolute -top-2 right-5 user-role-post-label user-role-blue"></span>
+      <div class="vote-controls flex flex-col items-center py-10 px-5">
+        <button class="flex items-center"><i class="bi bi-caret-up"></i></button>
+        <div class="vote-count font-semibold">1004</div>
+        <button class="flex items-center"><i class="bi bi-caret-down"></i></button>
+      </div>
+      <div class="post-details py-7 pe-7">
+        <!-- Post user name -->
+        <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">Deilon Cutamora</a></div>
+        
+        <!-- Post title -->
+        <div class="post-title font-semibold text-xl"><a href="{{ url('view/post/1') }}">Hi This is the title of this post. A post without text and this is quite long and im not sure where to end it. This is the title of this post. A post wit ... See more</a> </div>
+        
+        <!-- Post description text -->
+        <div class="post-description font-medium mt-3">This is the description text of the post and this can get longer. this is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. This is the description text of the post and this can get longer. asdadsasdfasdfasd ... <span class="font-semibold">See more</span></div>
+
+        <!-- Post photo -->
+        <div class="post-photo mt-3"><img src="{{ asset('images/sample-post-image.jpg') }}" alt="post photo"></div>
+
+        <!-- Post metrics -->
+        <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
+          <div class="comments"><a href="#"><i class="bi bi-chat-square-dots mr-1"></i> 19 Comments</a></div>
+          <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
+          <div class="time"><i class="bi bi-clock mr-1"></i> 21h ago</div>
+          <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
+      <span class="absolute -top-2 right-5 user-role-post-label user-role-blue"></span>
+      <div class="vote-controls flex flex-col items-center py-10 px-5">
+        <button class="flex items-center"><i class="bi bi-caret-up"></i></button>
+        <div class="vote-count font-semibold">1004</div>
+        <button class="flex items-center"><i class="bi bi-caret-down"></i></button>
+      </div>
+      <div class="post-details py-7 pe-7">
+        <!-- Post user name -->
+        <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">Deilon Cutamora</a></div>
+        
+        <!-- Post title -->
+        <div class="post-title font-semibold text-xl">This is the title of this post. A post with title, without text, but with image. this is quite long and im not sure where to end it.</div>
+
+        <!-- Post photo -->
+        <div class="post-photo mt-3"><img src="{{ asset('images/sample-post-image-2.jpg') }}" alt="post photo"></div>
+
+        <!-- Post metrics -->
+        <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
+          <div class="comments"><a href="#"><i class="bi bi-chat-square-dots mr-1"></i> 19 Comments</a></div>
+          <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
+          <div class="time"><i class="bi bi-clock mr-1"></i> 21h ago</div>
+          <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
+      <span class="absolute -top-2 right-5 user-role-post-label user-role-blue"></span>
+      <div class="vote-controls flex flex-col items-center py-10 px-5">
+        <button class="flex items-center"><i class="bi bi-caret-up"></i></button>
+        <div class="vote-count font-semibold">1004</div>
+        <button class="flex items-center"><i class="bi bi-caret-down"></i></button>
+      </div>
+      <div class="post-details py-7 pe-7">
+        <!-- Post user name -->
+        <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">Deilon Cutamora</a></div>
+        
+        <!-- Post title -->
+        <div class="post-title font-semibold text-xl">This is the title of this post. A post that is type of Link with title. this is quite long and im not sure where to end it.</div>
+
+        <!-- Link post -->
+        <div class="post-link flex space-x-2 font-medium mt-3">
+          <span><i class="bi bi-link-45deg text-base"></i></span>
+          <a href="#" class="hover:underline">This is the link and the link might be very long or short but the important is that it has blue color and underlined when hover</a>
+        </div>
+
+        <!-- Post metrics -->
+        <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
+          <div class="comments"><a href="#"><i class="bi bi-chat-square-dots mr-1"></i> 19 Comments</a></div>
+          <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
+          <div class="time"><i class="bi bi-clock mr-1"></i> 21h ago</div>
+          <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+@include('Layouts.bottom')

@@ -21,7 +21,7 @@ class PostFactory extends Factory
             // "text" => $this->faker->paragraph(2),
             // "image" => "post.jpg",
             "link" => "https://lms.laverdad.edu.ph",
-            "post_type" => "link_post"
+            "type" => "link"
         ];
     }
 }
