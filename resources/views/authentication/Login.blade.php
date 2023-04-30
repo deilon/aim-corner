@@ -35,7 +35,8 @@
                                 <label class="form-check-label" for="remember">Remember me</label>
                             </div>
                             <div class="mb-3">
-                                <a href="#">Forgot password?</a>
+                                <a href="#" class="d-block">Forgot password?</a>
+                                <a href="{{ url('student/register') }}" class="d-block" >Doesn't have an account? Register.</a>
                             </div>
                         </div>
 

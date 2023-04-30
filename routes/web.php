@@ -29,6 +29,8 @@ Route::middleware(['guest'])->group(function() {
     // Registrations
     Route::get('student/register', [RegisterController::class, 'studentRegister']);
     Route::get('instructor/register', [RegisterController::class, 'instructorRegister']);
+    Route::post('instructor/register', [RegisterController::class, 'storeInstructor']);
+    Route::post('student/register', [RegisterController::class, 'storeStudent']);
 });
 
 // Logout for all users role

@@ -1,5 +1,11 @@
 @include('Layouts.top')
 
+@if (session('welcome_message'))
+    <div class="p-4 bg-lime-200 rounded-md border-slate-300">
+        {{ session('welcome_message') }}
+    </div>
+@endif
+
 <section id="feed-nav" class="mt-5 font-medium">
   <div class="container mx-auto px-6">
     <div class="flex items-center space-x-10 bg-white border border-slate-300 rounded-md px-6">

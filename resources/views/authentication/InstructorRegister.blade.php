@@ -7,8 +7,7 @@
     <title>Document</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">   
-    <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
 <body>
     <section class="my-5">
@@ -19,25 +18,29 @@
                         <h4 class="align-self-center text-center">👨‍🏫👩‍🏫 Instructor Registration Form</h4>
                         <img src="{{ asset('images/logo-dark.png') }}" alt="logo" class="img-responsive" height="70px">
                     </div>
-                    <form>
+                    <form action="{{ url('instructor/register') }}" method="POST">
+                        @csrf
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="firstName" class="form-label">First name</label>
-                                <input type="text" class="form-control" name="firstName" id="firstName" aria-label="First name">
+                                <input type="text" class="form-control" name="firstname" id="firstName" aria-label="First name" value="{{ old('firstname') }}">
+                                @error('firstname')<div class="text-danger">{{ $message }}</div>@enderror
                             </div>
                             <div class="col">
-                                <label for="lastName" class="form-label">Last name</label>
-                                <input type="text" class="form-control" name="lastName" id="lastName" aria-label="Last name">
+                                <label for="lastname" class="form-label">Last name</label>
+                                <input type="text" class="form-control" name="lastname" id="lastname" aria-label="Last name" value="{{ old('lastname') }}">
+                                @error('lastname')<div class="text-danger">{{ $message }}</div>@enderror
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="middleName" class="form-label">Middle name ( optional )</label>
-                            <input type="text" class="form-control" name="middleName" id="middleName">
+                            <input type="text" class="form-control" name="middleName" id="middleName" value="{{ old('middlename') }}">
+                            @error('middlename')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for="country" class="form-label">Country</label>
-                            <select class="form-select" id="country" name="country">
-                                <option>Select your country</option>
+                            <select class="form-select" id="country" name="country" value="{{ old('country') }}">
+                                <option value="">Select your country</option>
                                 <option value="AF">Afghanistan</option>
                                 <option value="AX">Aland Islands</option>
                                 <option value="AL">Albania</option>
@@ -291,32 +294,38 @@
                                 <option value="ZM">Zambia</option>
                                 <option value="ZW">Zimbabwe</option>
                             </select>
+                            @error('country')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" name="city" id="city">    
+                            <input type="text" class="form-control" name="city" id="city" value="{{ old('city') }}">
+                            @error('city')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" id="username">
+                            <input type="text" class="form-control" name="username" id="username" value="{{ old('username') }}">
+                            @error('username')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" name="email" id="email">
+                            <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}">
+                            @error('email')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" id="password">
+                            @error('password')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm password</label>
-                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+                            <label for="password_confirmation" class="form-label">Confirm password</label>
+                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
+                            @error('password_confirm')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
-                            <a href="#">Already have an account? Login.</a>
+                            <a href="{{ url('login') }}">Already have an account? Login.</a>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create instructor account</button>
+                        <button type="submit" class="btn btn-primary">Create student account</button>
                     </form>
                 </div>
             </div>
