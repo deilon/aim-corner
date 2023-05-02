@@ -7,7 +7,7 @@
     <d class="flex items-center">
       <img src="{{asset('images/user_photo.png')}}" width="163" alt="user photo">
       <div class="flex flex-col space-y-2 profile-details ms-5">
-        <h1 class="text-2xl font-medium">FirstName LastName</h1>
+        <h1 class="text-2xl font-medium">{{Auth::user()->firstname}} {{Auth::user()->lastname}}</h1>
         <span class="user-role-title font-medium">Administrator</span>
         <a href="#" id="change-pass" class="text-red-500 font-medium hover:underline">Change password <i class="bi bi-pencil-square"></i></a>
         <a href="#" id="edit-profile" class="text-green-500 font-medium hover:underline hidden">Update profile <i class="bi bi-pencil-square"></i></a>

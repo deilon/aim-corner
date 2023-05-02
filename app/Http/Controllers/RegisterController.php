@@ -40,16 +40,16 @@ class RegisterController extends Controller
         ]);
 
         $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'middlename' => $request->middlename,
+            'username' => strtolower($request->username),
+            'email' => strtolower($request->email),
+            'password' => Hash::make(strtolower($request->password)),
+            'firstname' => strtolower($request->firstname),
+            'lastname' => strtolower($request->lastname),
+            'middlename' => strtolower($request->middlename),
             'photo' => 'profile.jpg',
-            'course' => $request->course,
-            'country' => $request->country,
-            'city' => $request->city,
+            'course' => strtolower($request->course),
+            'country' => strtolower($request->country),
+            'city' => strtolower($request->city),
             'role' => 'student',
         ]);
 
@@ -81,15 +81,15 @@ class RegisterController extends Controller
         ]);
 
         $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'middlename' => $request->middlename,
+            'username' => strtolower($request->username),
+            'email' => strtolower($request->email),
+            'password' => Hash::make(strtolower($request->password)),
+            'firstname' => strtolower($request->firstname),
+            'lastname' => strtolower($request->lastname),
+            'middlename' => strtolower($request->middlename),
             'photo' => 'profile.jpg',
-            'country' => $request->country,
-            'city' => $request->city,
+            'country' => strtolower($request->country),
+            'city' => strtolower($request->city),
             'role' => 'instructor',
         ]);
 
