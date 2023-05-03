@@ -31,6 +31,9 @@
                         <input type="text" id="title" placeholder="Title" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-6">
+                        <textarea id="description" rows="5" placeholder="Text (optional)" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" style="resize: vertical; min-height: 60px;"></textarea>
+                    </div>
+                    <div class="mb-6">
                         <input id="image" type="file" name="image" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="flex items-center justify-end">

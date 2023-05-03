@@ -19,7 +19,7 @@ class FeedController extends Controller
             return view('feed', $data);
         }
         
-        $data['posts'] = $posts->all(); 
+        $data['posts'] = Post::orderBy('created_at', 'desc')->get();
         return view('feed', $data);
     
     }
