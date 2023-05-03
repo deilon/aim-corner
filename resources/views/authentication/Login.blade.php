@@ -15,15 +15,20 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col col-lg-6 offset-lg-3">
+                    @if ($errors->has('email'))
+                        <div class="p-3 my-3 bg-danger text-white">
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
                     <div class="d-flex mb-5 justify-content-between">
                         <h4 class="align-self-center text-center">Welcome to Aim Corner</h4>
                         <img src="{{ asset('images/logo-dark.png') }}" alt="logo" class="img-responsive" height="70px">
                     </div>
-                    <form method="POST" action="/login">
+                    <form method="POST" action="{{url('login')}}">
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address or username</label>
-                            <input type="text" class="form-control" name="email" id="email">
+                            <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>

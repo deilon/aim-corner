@@ -39,7 +39,7 @@ Route::get('logout', [UserController::class, 'logout']);
 Route::middleware(['auth'])->group(function() {
     Route::get('/feed/{post}/posts', [FeedController::class, 'index']);
     Route::get('/profile', [UserController::class, 'profile']);
-    Route::post('/profile/update', [UserController::class, 'profileUpdate']);
+    Route::put('/profile/update', [UserController::class, 'profileUpdate']);
     
     Route::get('/add/post', [PostController::class, 'index']);
     Route::post('/add/post', [PostController::class, 'createPost']);
@@ -51,4 +51,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard/saved', [DashboardController::class, 'saved']);
     Route::get('/dashboard/upvoted', [DashboardController::class, 'upvoted']);
     Route::get('/dashboard/downvoted', [DashboardController::class, 'downvoted']);
+
+    Route::get('change/password', [UserController::class, 'changePasswordView']);
+    Route::post('change/password', [UserController::class, 'changePassword']);
 });

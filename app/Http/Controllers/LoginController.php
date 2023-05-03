@@ -14,19 +14,16 @@ class LoginController extends Controller
     }
 
     public function authenticateUsers(Request $request) {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
- 
-        if (Auth::attempt($credentials)) {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
- 
-            return redirect()->intended('feed/all/posts');
+    
+            return redirect()->intended('/feed/all/posts');
         }
- 
+    
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            'email' => 'Invalid email or password.',
+        ])->withInput();
     }
 }

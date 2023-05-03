@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -24,40 +25,38 @@ class UserController extends Controller
     public function profileUpdate(Request $request)
     {
         // Validate and update the user...
-        $user = Auth::user();
         $request->validate([
-            'username' => [
-                'required',
-                Rule::unique('users')->ignore($user->id),
-            ],
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'city' => 'required',
-            'country' => 'required',
-            'photo' => 'sometimes|required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|'
-        ]);
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'middlename' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
+            'username' => ['required', 'string', 'max:255','regex:/^(?!.*\.\.)(?!.*\.$)(?!.*\.\d)(?!.*\.$)[^\W][\w.]{0,29}$/', Rule::unique('users')->ignore(Auth::user()->id)],
+            // 'photo' => 'sometimes|required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|'
+        ], ['username.regex' => 'Invalid username.']);
 
-        if ($request->file("photo") != null) {
-            $photo_name = time().'_'.$request->file("photo")->getClientOriginalName();
-            $request->file('photo')->storeAs('public/images/', $photo_name);
+        // if ($request->file("photo") != null) {
+        //     $photo_name = time().'_'.$request->file("photo")->getClientOriginalName();
+        //     $request->file('photo')->storeAs('public/images/', $photo_name);
             
-        }
+        // }
 
         $user = Auth::user();
-        $user->username = $request['username'];
-        $user->firstname = $request['firstname'];
-        $user->lastname = $request['lastname'];
-        $user->city = $request['city'];
-        $user->country = $request['country'];
-        if ($request->file("photo") != null) {
-            $user->photo = $photo_name;
-        }
+        $user->firstname = strtolower($request->firstname);
+        $user->lastname = strtolower($request->lastname);
+        $user->middlename = strtolower($request->middlename);
+        $user->username = strtolower($request->username);
+        $user->email = strtolower($request->email);
+        // if ($request->file("photo") != null) {
+        //     $user->photo = $photo_name;
+        // }
         $user->save();
 
-        return ($request->file("photo") != null) ? 
-        back()->with('status','Profile Updated')->with('dp_upload', 'The profile photo has been uploaded but due to free hosting limitation we are unable to preview your photo at the moment.') :
-        back()->with('status','Profile Updated');
-        ;
+        // return ($request->file("photo") != null) ? 
+        // back()->with('status','Profile Updated')->with('dp_upload', 'The profile photo has been uploaded but due to free hosting limitation we are unable to preview your photo at the moment.') :
+        // back()->with('status','Profile Updated');
+        // ;
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
     /**
@@ -75,5 +74,31 @@ class UserController extends Controller
         $request->session()->regenerateToken();
     
         return redirect('/');
+    }
+
+    public function changePasswordView() {
+        $data['user'] = Auth::user();
+        return view('change_password', $data);
+    }
+
+    public function changePassword(Request $request) {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).+$/'],
+        ], [
+            'password.regex' => 'Your password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.'
+        ]);
+    
+        $user = Auth::user();
+    
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'The provided password does not match your current password.']);
+        }
+    
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+    
+        return redirect()->back()->with('success', 'Password updated successfully.');
     }
 }
