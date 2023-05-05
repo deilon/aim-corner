@@ -37,12 +37,14 @@ Route::middleware(['guest'])->group(function() {
 Route::get('logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('/feed/{post}/posts', [FeedController::class, 'index']);
+    Route::get('/feed/{post}/posts', [FeedController::class, 'index'])->name('all/feed');
     Route::get('/profile', [UserController::class, 'profile']);
     Route::put('/profile/update', [UserController::class, 'profileUpdate']);
     
     Route::get('/add/post', [PostController::class, 'index']);
-    Route::post('/add/post', [PostController::class, 'createPost']);
+    Route::post('/add/title/post', [PostController::class, 'createTitlePost']);
+    Route::post('/add/image/post', [PostController::class, 'createImagePost']);
+    Route::post('/add/link/post', [PostController::class, 'createLinkPost']);
     Route::get('/view/post/{id}', [PostController::class, 'viewPost']);
     Route::post('/add/comment', [CommentController::class, 'createComment']);
 

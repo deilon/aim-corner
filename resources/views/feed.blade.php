@@ -5,6 +5,12 @@
         {{ session('welcome_message') }}
     </div>
 @endif
+@if (session('success'))
+    <div class="p-4 bg-lime-200 rounded-md border-slate-300">
+        {{ session('success') }}
+    </div>
+@endif
+
 
 <section id="feed-nav" class="mt-5 font-medium">
   <div class="container mx-auto px-6">
@@ -56,7 +62,7 @@
             <div class="post-description font-medium mt-3">{{$post->text}}</div>
           @endif
           <!-- Post photo -->
-          <div class="post-photo mt-3"><img src="{{ asset('images/' . $post->image) }}" alt="post photo"></div>
+          <div class="post-photo mt-3"><img src="{{ asset('storage/post_images/' . $post->image) }}" alt="post photo"></div>
         @elseif ($post->type == "link")
           <!-- Link post -->
           <div class="post-link flex space-x-2 font-medium mt-3">
