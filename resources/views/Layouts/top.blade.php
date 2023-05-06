@@ -34,8 +34,12 @@
         <div class="relative">
           <button id="acct-btn" class="flex items-center p-2 hover:bg-gray-200 hover:cursor-pointer">
             <span class="flex items-center" style="width: 200px !important">
-              <img src="{{ asset('images/user_photo.png') }}" width="33" height="33" class="mr-3" alt="default photo">
-              <span class="text-ellipsis overflow-hidden">{{ Auth::user()->username }}</span>  
+              @if(!empty(Auth::user()->photo))
+                <img src="{{ asset('storage/profile_pic/' . Auth::user()->photo) }}" width="33" height="33" class="mr-3" alt="default photo">
+              @else 
+                <img src="{{ asset('storage/profile_pic/default.jpg') }}" width="33" height="33" class="mr-3" alt="default photo">
+              @endif
+                <span class="text-ellipsis overflow-hidden">{{ Auth::user()->username }}</span>  
             </span>
               <i class="bi bi-caret-down"></i>
           </button>

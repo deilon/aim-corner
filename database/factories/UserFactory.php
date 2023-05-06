@@ -25,7 +25,6 @@ class UserFactory extends Factory
             'lastname' => $this->faker->lastName(),
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
-            'photo' => 'profile.jpg',
             'course' => '1st Year BSIS',
             'role' => 'student',
             'remember_token' => Str::random(10),

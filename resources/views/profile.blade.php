@@ -11,7 +11,16 @@
   <!-- Profile pic, name -->
   <div class="container mx-auto px-6">
     <d class="flex items-center">
-      <img src="{{asset('images/user_photo.png')}}" width="163" alt="user photo">
+      <div class="user-photo-wrap relative bg-cover bg-no-repeat" style="background-image: url({{asset('storage/profile_pic/' . $user->photo)}});">
+          @if(!empty($user->photo))
+            <img src="{{asset('storage/profile_pic/'. $user->photo)}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @else
+            <img src="{{asset('storage/profile_pic/default.jpg')}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @endif
+          <div class="hidden absolute peer-hover:flex hover:flex w-full flex-col bg-white drop-shadow-lg">
+            <button class="px-5 py-3 hover:bg-gray-200 upload-button">Upload a photo</button>
+        </div>
+      </div>
       <div class="flex flex-col space-y-2 profile-details ms-5">
         <h1 class="text-2xl font-medium">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
         <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
@@ -23,7 +32,7 @@
   <!-- Basci info -->
   <div class="container mx-auto mt-10 px-6 profile-edit">
     <div class="w-7/12">
-      <form action="{{ url('profile/update') }}" method="POST">
+      <form action="{{ url('profile/update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="flex flex-col">
@@ -53,6 +62,11 @@
             <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="username" id="username" value="{{ old('username', $user->username) }}">
             @error('username')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
+          <div class="input-and-label mb-10 hidden">
+            <label for="photo" class="font-medium">Upload profile photo</label> <br>
+            <input type="file" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full photo-upload" name="photo" id="photo" value="{{ old('photo', $user->photo) }}">
+            @error('photo')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
+          </div>
           <button type="submit" class="bg-green-700 py-2 font-bold text-white rounded">Update Profile</button>
         </div>
       </form>
@@ -63,4 +77,31 @@
 
 </div>
 
+    <!-- jQuery CDN source -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        
+        var readURL = function(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.user-photo').attr('src', e.target.result);
+                }
+        
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+
+        $(".photo-upload").on('change', function(){
+            readURL(this);
+        });
+        
+        $(".upload-button").on('click', function() {
+          $(".photo-upload").click();
+        });
+      });
+    </script>
 @include('layouts/bottom')

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -31,31 +32,34 @@ class UserController extends Controller
             'middlename' => ['sometimes', 'nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
             'username' => ['required', 'string', 'max:255','regex:/^(?!.*\.\.)(?!.*\.$)(?!.*\.\d)(?!.*\.$)[^\W][\w.]{0,29}$/', Rule::unique('users')->ignore(Auth::user()->id)],
-            // 'photo' => 'sometimes|required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|'
+            'photo' => ['sometimes', 'image', 'max:2048']
         ], ['username.regex' => 'Invalid username.']);
 
-        // if ($request->file("photo") != null) {
-        //     $photo_name = time().'_'.$request->file("photo")->getClientOriginalName();
-        //     $request->file('photo')->storeAs('public/images/', $photo_name);
-            
-        // }
-
+        // Store update
         $user = Auth::user();
         $user->firstname = strtolower($request->firstname);
         $user->lastname = strtolower($request->lastname);
         $user->middlename = strtolower($request->middlename);
         $user->username = strtolower($request->username);
         $user->email = strtolower($request->email);
-        // if ($request->file("photo") != null) {
-        //     $user->photo = $photo_name;
-        // }
+
+        // Save photo file
+        if(!empty($request->file('photo'))) {
+            $oldPhoto = $user->photo;
+            $image = $request->file('photo');
+            $filename = $image->hashName();
+            $imagePath = $image->storeAs('public/profile_pic', $filename);
+            $user->photo = $filename;
+
+            // Delete the old profile picture file from the storage disk to save space
+            if (!empty($oldPhoto)) {
+                Storage::delete('public/profile_pic/' . $oldPhoto);
+            }
+        }
+
         $user->save();
 
-        // return ($request->file("photo") != null) ? 
-        // back()->with('status','Profile Updated')->with('dp_upload', 'The profile photo has been uploaded but due to free hosting limitation we are unable to preview your photo at the moment.') :
-        // back()->with('status','Profile Updated');
-        // ;
-
+        // redirect
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
