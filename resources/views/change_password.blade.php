@@ -11,7 +11,11 @@
   <!-- Profile pic, name -->
   <div class="container mx-auto px-6">
     <d class="flex items-center">
-      <img src="{{asset('images/user_photo.png')}}" width="163" alt="user photo">
+      @if(!empty($user->photo))
+        <img src="{{asset('storage/profile_pic/'. $user->photo)}}" class="peer user-photo" width="163" height="163" alt="user photo">
+      @else
+        <img src="{{asset('storage/profile_pic/default.jpg')}}" class="peer user-photo" width="163" height="163" alt="user photo">
+      @endif
       <div class="flex flex-col space-y-2 profile-details ms-5">
         <h1 class="text-2xl font-medium">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
         <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
