@@ -471,8 +471,6 @@ video {
 }@media (min-width: 1536px) {.container {
     max-width: 1536px;
   }
-}.invisible {
-  visibility: hidden;
 }.fixed {
   position: fixed;
 }.absolute {
@@ -580,8 +578,6 @@ video {
   height: 2.25rem;
 }.h-screen {
   height: 100vh;
-}.h-full {
-  height: 100%;
 }.min-h-screen {
   min-height: 100vh;
 }.w-20 {
@@ -598,10 +594,6 @@ video {
   width: auto;
 }.w-full {
   width: 100%;
-}.w-\[200px\] {
-  width: 200px;
-}.w-\[163px\] {
-  width: 163px;
 }.max-w-6xl {
   max-width: 72rem;
 }.resize {

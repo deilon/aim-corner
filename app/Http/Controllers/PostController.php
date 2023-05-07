@@ -47,7 +47,7 @@ class PostController extends Controller
         $rules = [
             'title' => ['required'],
             'text' => ['nullable'],
-            'image' => ['required', 'image', 'max:2048'],
+            'image' => ['required', 'image'],
         ];
 
         // Run validation

@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/add/title/post', [PostController::class, 'createTitlePost']);
     Route::post('/add/image/post', [PostController::class, 'createImagePost']);
     Route::post('/add/link/post', [PostController::class, 'createLinkPost']);
-    Route::get('/view/post/{id}', [PostController::class, 'viewPost']);
+    Route::get('/view/{post_id}/post', [PostController::class, 'viewPost']);
     Route::post('/add/comment', [CommentController::class, 'createComment']);
 
     Route::get('/dashboard/posts', [DashboardController::class, 'posts']);

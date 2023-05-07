@@ -23,10 +23,10 @@
                 <form action="{{url('add/title/post')}}" method="POST">
                     @csrf
                     <div class="mb-6">
-                        <input type="text" name="title" id="title" placeholder="Title" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" name="title" id="title" placeholder="Title" value="{{old('title')}}" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-6">
-                        <textarea id="text" name="text" rows="5" placeholder="Text (optional)" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" style="resize: vertical; min-height: 60px;"></textarea>
+                        <textarea id="text" name="text" rows="5" placeholder="Text (optional)" value="{{old('text')}}" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" style="resize: vertical; min-height: 60px;"></textarea>
                     </div>
                     <div class="flex items-center justify-end">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Post</button>
@@ -38,13 +38,13 @@
                 <form action="{{url('add/image/post')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-6">
-                        <input type="text" name="title" id="title" placeholder="Title" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" name="title" id="title" value="{{old('title')}}" placeholder="Title" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-6">
-                        <textarea id="text" name="text" rows="5" placeholder="Text (optional)" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" style="resize: vertical; min-height: 60px;"></textarea>
+                        <textarea id="text" name="text" rows="5" value="{{old('text')}}" placeholder="Text (optional)" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" style="resize: vertical; min-height: 60px;"></textarea>
                     </div>
                     <div class="mb-6">
-                        <input id="image" type="file" name="image" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input id="image" type="file" name="image" value="{{old('image')}}" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="flex items-center justify-end">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Post</button>
@@ -56,10 +56,10 @@
                 <form action="{{url('add/link/post')}}" method="POST">
                     @csrf
                     <div class="mb-6">
-                        <input type="text" id="title" name="title" placeholder="Title" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" id="title" name="title" value="{{old('title')}}" placeholder="Title" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-6">
-                        <input id="link" type="url" placeholder="URL" name="link" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <input id="link" type="url" placeholder="URL" value="{{old('link')}}" name="link" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="flex items-center justify-end">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Post</button>
