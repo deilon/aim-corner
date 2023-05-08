@@ -49,20 +49,20 @@
         <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">{{$post->user->firstname .' '. $post->user->lastname}}</a></div>
         
         <!-- Post title -->
-        <div class="post-title font-semibold text-xl">{{$post->title}}</div>
+        <div class="post-title font-semibold text-xl"><a href="{{url('view/'.$post->id.'/post')}}" class="hover:cursor-pointer">{{$post->title}}</a></div>
 
         @if ($post->type == "title")
           @if (isset($post->text))
           <!-- Post description text -->
-          <div class="post-description font-medium mt-3">{{$post->text}}</div>
+          <div class="post-description font-medium mt-3"><a href="{{url('view/'.$post->id.'/post')}}" class="hover:cursor-pointer">{{$post->text}}</a></div>
           @endif
         @elseif ($post->type == "photo")
           @if (isset($post->text))
             <!-- Post description text -->
-            <div class="post-description font-medium mt-3">{{$post->text}}</div>
+            <div class="post-description font-medium mt-3"><a href="{{url('view/'.$post->id.'/post')}}" class="hover:cursor-pointer">{{$post->text}}</a></div>
           @endif
           <!-- Post photo -->
-          <div class="post-photo mt-3"><img src="{{ asset('storage/post_images/' . $post->image) }}" alt="post photo"></div>
+          <div class="post-photo mt-3"><a href="{{url('view/'.$post->id.'/post')}}" class="hover:cursor-pointer"><img src="{{ asset('storage/post_images/' . $post->image) }}" alt="post photo"></a></div>
         @elseif ($post->type == "link")
           <!-- Link post -->
           <div class="post-link flex space-x-2 font-medium mt-3">
@@ -73,9 +73,9 @@
         
         <!-- Post metrics -->
         <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
-          <div class="comments"><a href="#"><i class="bi bi-chat-square-dots mr-1"></i> 19 Comments</a></div>
+          <div class="comments"><a href="{{url('view/'. $post->id . '/post')}}"><i class="bi bi-chat-square-dots mr-1"></i> {{ $post->comments->count() }} Comments</a></div>
           <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
-          <div class="time"><i class="bi bi-clock mr-1"></i> 21h ago</div>
+          <div class="time"><i class="bi bi-clock mr-1"></i> {{ $post->created_at->diffForHumans() }}</div>
           <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
         </div>
 

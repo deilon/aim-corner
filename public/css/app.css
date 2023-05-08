@@ -510,12 +510,6 @@ video {
   margin-bottom: 1.25rem;
 }.mb-6 {
   margin-bottom: 1.5rem;
-}.me-2 {
-  -webkit-margin-end: 0.5rem;
-          margin-inline-end: 0.5rem;
-}.me-4 {
-  -webkit-margin-end: 1rem;
-          margin-inline-end: 1rem;
 }.ml-1 {
   margin-left: 0.25rem;
 }.ml-12 {
@@ -539,9 +533,6 @@ video {
 }.ms-5 {
   -webkit-margin-start: 1.25rem;
           margin-inline-start: 1.25rem;
-}.ms-auto {
-  -webkit-margin-start: auto;
-          margin-inline-start: auto;
 }.mt-1 {
   margin-top: 0.25rem;
 }.mt-10 {
