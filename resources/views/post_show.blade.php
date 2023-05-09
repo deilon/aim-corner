@@ -70,8 +70,12 @@
             @if($post->comments->count() > 0)
                 @foreach($post->comments as $comment)
                     <div class="flex items-start space-x-4 mb-10">
-                        <img src="{{ asset('storage/profile_pic/' . $comment->user->photo) }}" width="33" height="33" alt="Profile picture">
-                        <div class="flex flex-col">
+                        @if(!empty($comment->user->photo))
+                          <img src="{{ asset('storage/profile_pic/' . $comment->user->photo) }}" width="33" height="33" alt="Profile picture">
+                        @else
+                          <img src="{{ asset('storage/profile_pic/default.jpg') }}" width="33" height="33" alt="Profile picture">
+                        @endif
+                          <div class="flex flex-col">
                             <div class="font-bold">{{$comment->user->firstname.' '.$comment->user->lastname}} <span class="ml-3 text-gray-600">{{'@'.$comment->user->username}} • {{ $comment->created_at->diffForHumans() }}</span></div>
                             <div class="mt-2 text-gray-800 font-medium">{{$comment->comment}}</div>
                         </div>
