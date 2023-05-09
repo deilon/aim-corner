@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\VoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,4 +57,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('change/password', [UserController::class, 'changePasswordView']);
     Route::post('change/password', [UserController::class, 'changePassword']);
+
+    // Votes
+    Route::post('post/vote', [VoteController::class, 'vote'])->name('posts.vote');
 });

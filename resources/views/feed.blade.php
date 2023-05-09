@@ -40,9 +40,9 @@
       @endif
 
       <div class="vote-controls flex flex-col items-center py-10 px-5">
-        <button class="flex items-center"><i class="bi bi-caret-up"></i></button>
-        <div class="vote-count font-semibold">1004</div>
-        <button class="flex items-center"><i class="bi bi-caret-down"></i></button>
+         <button type="submit" class="upvote-btn flex items-center" data-post-id="{{ $post->id }}"><i class="bi bi-caret-up"></i></button>
+         <div class="vote-count font-semibold" data-post-id="{{$post->id}}">{{$post->votes->sum('vote');}}</div>
+         <button class="downvote-btn flex items-center" data-post-id="{{ $post->id }}"><i class="bi bi-caret-down"></i></button>  
       </div>
       <div class="post-details py-7 pe-7">
         <!-- Post user name -->
@@ -88,4 +88,33 @@
   </div>
 </section>
 
+<!-- jQuery code to update vote count using AJAX -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+$(function() {
+    $('.upvote-btn, .downvote-btn').click(function(e) {
+        e.preventDefault();
+
+        var postId = $(this).data('post-id');
+        var voteType = $(this).hasClass('upvote-btn') ? 'upvote' : 'downvote';
+
+        $.ajax({
+            url: '{{ route("posts.vote") }}',
+            type: 'POST',
+            data: {
+                user_id: '{{Auth::user()->id}}',
+                post_id: postId,
+                vote_type: voteType
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                $('.vote-count[data-post-id="' + postId + '"]').text(response.vote_count);
+            }
+        });
+    });
+});
+</script>
 @include('Layouts.bottom')

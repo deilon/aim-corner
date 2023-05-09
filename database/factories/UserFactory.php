@@ -20,7 +20,7 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2y$10$2BAv1ZMktIOvin8NphwQwOT5Em1mj7nKnX3LLSjpi5gM42jqCou9.', // password123#
             'firstname' => $this->faker->firstNameMale(),
             'lastname' => $this->faker->lastName(),
             'city' => $this->faker->city(),
