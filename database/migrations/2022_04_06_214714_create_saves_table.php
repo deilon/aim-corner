@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('saved', function (Blueprint $table) {
+        Schema::create('saves', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('post_id')->constrained('posts')->onUpdate('cascade')->onDelete('cascade');
-            $table->tinyInteger('save');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saved');
+        Schema::dropIfExists('saves');
     }
 };

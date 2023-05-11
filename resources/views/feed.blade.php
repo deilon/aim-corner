@@ -74,7 +74,16 @@
         <!-- Post metrics -->
         <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
           <div class="comments"><a href="{{url('view/'. $post->id . '/post')}}"><i class="bi bi-chat-square-dots mr-1"></i> {{ $post->comments->count() }} Comments</a></div>
-          <div class="save"><i class="bi bi-bookmark mr-1"></i> Save</div>
+          <div class="save">
+            <button type="submit" class="save-post-btn hover:cursor-pointer" data-post-id="{{$post->id}}">
+              @if(Auth::user()->saves()->where('post_id', $post->id)->exists())
+                <i class="save-icon bi bi-bookmark-fill mr-1"></i>
+              @else 
+                <i class="save-icon bi bi-bookmark mr-1"></i>
+              @endif
+              <span>Save</span>
+            </button>
+          </div>
           <div class="time"><i class="bi bi-clock mr-1"></i> {{ $post->created_at->diffForHumans() }}</div>
           <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
         </div>
@@ -92,29 +101,68 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
-$(function() {
-    $('.upvote-btn, .downvote-btn').click(function(e) {
-        e.preventDefault();
+  $(function() {
 
-        var postId = $(this).data('post-id');
-        var voteType = $(this).hasClass('upvote-btn') ? 'upvote' : 'downvote';
+    // Upvote 
+      $('.upvote-btn, .downvote-btn').click(function(e) {
+          e.preventDefault();
 
-        $.ajax({
-            url: '{{ route("posts.vote") }}',
-            type: 'POST',
-            data: {
-                user_id: '{{Auth::user()->id}}',
-                post_id: postId,
-                vote_type: voteType
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                $('.vote-count[data-post-id="' + postId + '"]').text(response.vote_count);
-            }
-        });
-    });
-});
+          var postId = $(this).data('post-id');
+          var voteType = $(this).hasClass('upvote-btn') ? 'upvote' : 'downvote';
+
+          $.ajax({
+              url: '{{ route("posts.vote") }}',
+              type: 'POST',
+              data: {
+                  user_id: '{{Auth::user()->id}}',
+                  post_id: postId,
+                  vote_type: voteType
+              },
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(response) {
+                  $('.vote-count[data-post-id="' + postId + '"]').text(response.vote_count);
+              }
+          });
+      });
+
+    // Save
+    $('.save-post-btn').click(function(e) {
+          e.preventDefault();
+
+          var postId = $(this).data('post-id');
+          
+
+          $.ajax({
+              url: '{{ route("posts.save") }}',
+              type: 'POST',
+              data: {
+                post_id: postId
+              },
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(response) {
+                if(response.save) {
+                  $('.save-post-btn[data-post-id="' + postId + '"] i')
+                    .removeClass("bi bi-bookmark")
+                    .addClass("bi bi-bookmark-fill");
+
+                    $('.save-post-btn[data-post-id="' + postId + '"] span').text("Saved");
+                    alert("Post has been saved.");
+                } else {
+                  $('.save-post-btn[data-post-id="' + postId + '"] i')
+                    .removeClass("bi bi-bookmark-fill")
+                    .addClass("bi bi-bookmark");
+
+                    $('.save-post-btn[data-post-id="' + postId + '"] span').text("Save");
+                    alert("Post usaved.");
+                }
+              }
+          });
+      });
+
+  });
 </script>
 @include('Layouts.bottom')

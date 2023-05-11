@@ -9,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\SaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +61,8 @@ Route::middleware(['auth'])->group(function() {
 
     // Votes
     Route::post('post/vote', [VoteController::class, 'vote'])->name('posts.vote');
+
+    // Save
+    Route::post('/posts/save', [SaveController::class, 'save'])->name('posts.save');
+    // Route::delete('/posts/{post}/save', [SaveController::class, 'unsave'])->name('posts.unsave');
 });

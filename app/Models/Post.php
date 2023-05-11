@@ -34,4 +34,8 @@ class Post extends Model
     public function votes() {
         return $this->hasMany(Vote::class);
     }
+
+    public function saves() {
+        return $this->hasMany(Save::class);
+    }
 }
