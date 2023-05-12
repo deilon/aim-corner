@@ -20,7 +20,36 @@ $(function() {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
               success: function(response) {
-                  $('.vote-count[data-post-id="' + postId + '"]').text(response.vote_count);
+                if(voteType === 'upvote') {
+                  // check if downvoted
+                  if($('.downvote-btn[data-post-id="' + postId + '"]').hasClass('downvoted')) {
+                    $('.downvote-btn[data-post-id="' + postId + '"]').toggleClass('downvoted');
+                    $('.downvote-btn[data-post-id="' + postId + '"] i').toggleClass('bi-caret-down bi-caret-down-fill');
+
+                    $('.upvote-btn[data-post-id="' + postId + '"]').removeClass('upvoted');
+                    $('.upvote-btn[data-post-id="' + postId + '"] i').removeClass('bi-caret-up-fill'); 
+                    $('.upvote-btn[data-post-id="' + postId + '"] i').addClass('bi-caret-up'); 
+                  } else {
+                    // proceed to toggle
+                    $('.upvote-btn[data-post-id="' + postId + '"]').toggleClass('upvoted');
+                    $('.upvote-btn[data-post-id="' + postId + '"] i').toggleClass('bi-caret-up bi-caret-up-fill');   
+                  }
+                } else {
+                  // check if upvoted
+                  if($('.upvote-btn[data-post-id="' + postId + '"]').hasClass('upvoted')) {
+                    $('.upvote-btn[data-post-id="' + postId + '"]').toggleClass('upvoted');
+                    $('.upvote-btn[data-post-id="' + postId + '"] i').toggleClass('bi-caret-up bi-caret-up-fill');
+
+                    $('.downvote-btn[data-post-id="' + postId + '"]').removeClass('downvoted');
+                    $('.downvote-btn[data-post-id="' + postId + '"] i').removeClass('bi-caret-down-fill');  
+                    $('.downvote-btn[data-post-id="' + postId + '"] i').addClass('bi-caret-down');  
+                  } else {
+                    $('.downvote-btn[data-post-id="' + postId + '"]').toggleClass('downvoted');
+                    $('.downvote-btn[data-post-id="' + postId + '"] i').toggleClass('bi-caret-down bi-caret-down-fill');
+                  }
+                                   
+                }
+                $('.vote-count[data-post-id="' + postId + '"]').text(response.vote_count);
               }
           });
       });

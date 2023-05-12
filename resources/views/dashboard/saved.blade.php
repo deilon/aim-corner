@@ -17,9 +17,22 @@
       @endif
 
       <div class="vote-controls flex flex-col items-center py-10 px-5">
-      <button type="submit" class="upvote-btn flex items-center" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-up"></i></button>
-        <div class="vote-count font-semibold" data-post-id="{{$post->id}}">{{$post->votes->sum('vote');}}</div>
-        <button class="downvote-btn flex items-center" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-down"></i></button>
+        <!-- Upvote button -->
+        @if(Auth::user()->votes()->where('post_id', $post->id)->where('vote', 1)->exists())
+        <button class="upvote-btn flex items-center text-slate-600 upvoted" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-up-fill"></i></button>
+        @else
+          <button class="upvote-btn flex items-center text-slate-600" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-up"></i></button>
+        @endif
+
+        <!-- Vote counts -->
+         <div class="vote-count font-semibold" data-post-id="{{ $post->id }}">{{ $post->votes->sum('vote') }}</div>
+        
+        <!-- Downvote button -->
+        @if(Auth::user()->votes()->where('post_id', $post->id)->where('vote', -1)->exists())
+          <button class="downvote-btn flex items-center text-slate-600 downvoted" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-down-fill"></i></button>
+        @else
+          <button class="downvote-btn flex items-center text-slate-600" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-down"></i></button>
+        @endif
       </div>
       <div class="post-details py-7 pe-7">
         <!-- Post user name -->

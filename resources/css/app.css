@@ -41,3 +41,11 @@ nav {
 .post-link {
     color: #00344A;
 }
+
+.upvoted {
+    color: rgb(145, 50, 50);
+}
+
+.downvoted {
+    color: rgb(65, 65, 207);
+}
