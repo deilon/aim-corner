@@ -581,6 +581,8 @@ video {
   width: 2rem;
 }.w-8\/12 {
   width: 66.666667%;
+}.w-\[200px\] {
+  width: 200px;
 }.w-auto {
   width: auto;
 }.w-full {

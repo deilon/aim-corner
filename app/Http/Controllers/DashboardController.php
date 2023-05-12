@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $user_id = Auth::user()->id;
         $data['posts'] = Post::whereHas('comments', function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
-        })->get();        
+        })->orderBy('created_at', 'desc')->get();        
         return view('dashboard/comments', $data);
     }
 

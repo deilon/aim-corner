@@ -22,4 +22,9 @@ class CommentController extends Controller
         return redirect()->route('view/post', $post_id)
             ->with('success', 'Comment submitted.');
     }
+
+    public function delete(Comment $comment) {
+        $comment->delete();
+        return redirect()->back()->with('success', 'Your comment deleted successfully');
+    }
 }

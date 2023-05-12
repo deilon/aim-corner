@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <!-- CSS only -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- jQuery code to update vote count using AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 <body class="font-raleway">
     
@@ -22,7 +24,7 @@
 
     <div class="flex justify-between items-center">
       <div class="flex space-x-5 items-center">
-        <a href="#" class="mr-5"><img src="http://localhost:8000/images/logo-dark.svg" alt="logo" width="60"></a>
+        <a href="{{ url('feed/all/posts') }}" class="mr-5"><img src="http://localhost:8000/images/logo-dark.svg" alt="logo" width="60"></a>
         <a href="{{ url('feed/all/posts') }}" class="border-b-2 border-black py-2">Home</a>
         <a href="{{ url('profile') }}">Profile</a>
         <a href="{{ url('dashboard/posts') }}">Dashboard</a>

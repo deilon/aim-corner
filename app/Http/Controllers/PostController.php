@@ -150,5 +150,10 @@ class PostController extends Controller
         return view("post_show", $data);
     }
 
+    public function delete(Post $post) {
+        $post->delete();
+        return redirect()->back()->with('success', 'Post deleted successfully');
+    }
+
 }
 

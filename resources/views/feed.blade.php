@@ -40,9 +40,9 @@
       @endif
 
       <div class="vote-controls flex flex-col items-center py-10 px-5">
-         <button type="submit" class="upvote-btn flex items-center" data-post-id="{{ $post->id }}"><i class="bi bi-caret-up"></i></button>
+         <button type="submit" class="upvote-btn flex items-center" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-up"></i></button>
          <div class="vote-count font-semibold" data-post-id="{{$post->id}}">{{$post->votes->sum('vote');}}</div>
-         <button class="downvote-btn flex items-center" data-post-id="{{ $post->id }}"><i class="bi bi-caret-down"></i></button>  
+         <button class="downvote-btn flex items-center" data-post-id="{{ $post->id }}" data-route-url="{{ route('posts.vote') }}"><i class="bi bi-caret-down"></i></button>  
       </div>
       <div class="post-details py-7 pe-7">
         <!-- Post user name -->
@@ -75,7 +75,7 @@
         <div class="post-metrics flex flex-row space-x-5 items-center mt-10 py-5 px-3 font-semibold border-t-2 border-slate-300">
           <div class="comments"><a href="{{url('view/'. $post->id . '/post')}}"><i class="bi bi-chat-square-dots mr-1"></i> {{ $post->comments->count() }} Comments</a></div>
           <div class="save">
-            <button type="submit" class="save-post-btn hover:cursor-pointer" data-post-id="{{$post->id}}">
+            <button type="submit" class="save-post-btn hover:cursor-pointer" data-post-id="{{$post->id}}" data-route-url="{{ route('posts.save') }}">
               @if(Auth::user()->saves()->where('post_id', $post->id)->exists())
                 <i class="save-icon bi bi-bookmark-fill mr-1"></i>
               @else 
@@ -86,6 +86,18 @@
           </div>
           <div class="time"><i class="bi bi-clock mr-1"></i> {{ $post->created_at->diffForHumans() }}</div>
           <div class="categories"><i class="bi bi-tags mr-1"></i> Categories</div>
+          @if($post->user_id == auth()->user()->id)
+            <div class="action relative" data-action-id="{{ $post->id }}">
+              <i class="bi bi-three-dots"></i>
+              <div class="absolute hidden flex flex-col shadow-2xl bg-white border border-slate-300 py-5 rounded w-[200px] z-40">
+                <form action="{{ route('post.delete', $post) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="text-start p-3 bg-gray-100 hover:bg-gray-200 hover:cursor-pointer w-full">Delete</button>
+                </form>
+              </div>
+            </div>
+          @endif
         </div>
 
       </div>
@@ -97,72 +109,7 @@
   </div>
 </section>
 
-<!-- jQuery code to update vote count using AJAX -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script>
-  $(function() {
+<script src="{{ asset('js/postActions.js')}}"></script>
+<script src="{{ asset('js/userPostActions.js')}}"></script>
 
-    // Upvote 
-      $('.upvote-btn, .downvote-btn').click(function(e) {
-          e.preventDefault();
-
-          var postId = $(this).data('post-id');
-          var voteType = $(this).hasClass('upvote-btn') ? 'upvote' : 'downvote';
-
-          $.ajax({
-              url: '{{ route("posts.vote") }}',
-              type: 'POST',
-              data: {
-                  user_id: '{{Auth::user()->id}}',
-                  post_id: postId,
-                  vote_type: voteType
-              },
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function(response) {
-                  $('.vote-count[data-post-id="' + postId + '"]').text(response.vote_count);
-              }
-          });
-      });
-
-    // Save
-    $('.save-post-btn').click(function(e) {
-          e.preventDefault();
-
-          var postId = $(this).data('post-id');
-          
-
-          $.ajax({
-              url: '{{ route("posts.save") }}',
-              type: 'POST',
-              data: {
-                post_id: postId
-              },
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function(response) {
-                if(response.save) {
-                  $('.save-post-btn[data-post-id="' + postId + '"] i')
-                    .removeClass("bi bi-bookmark")
-                    .addClass("bi bi-bookmark-fill");
-
-                    $('.save-post-btn[data-post-id="' + postId + '"] span').text("Saved");
-                    alert("Post has been saved.");
-                } else {
-                  $('.save-post-btn[data-post-id="' + postId + '"] i')
-                    .removeClass("bi bi-bookmark-fill")
-                    .addClass("bi bi-bookmark");
-
-                    $('.save-post-btn[data-post-id="' + postId + '"] span').text("Save");
-                    alert("Post usaved.");
-                }
-              }
-          });
-      });
-
-  });
-</script>
 @include('Layouts.bottom')

@@ -1,5 +1,11 @@
 @include('layouts/top')
 
+@if (session('success'))
+    <div class="p-4 bg-lime-200 rounded-md border-slate-300">
+        {{ session('success') }}
+    </div>
+@endif
+
 @include('layouts/dashboardnav')
 
 <section id="dashboard-comments" class="mt-5">
@@ -16,8 +22,8 @@
             <i class="bi bi-pencil-fill"></i>
           </div>
           <div class="post-source-main-title pe-5 py-5">
-            <a href="#" class="font-medium text-base hover:underline">{{ $post->title }}</a>
-            <span class="block font-bold text-sm text-slate-500 mt-2">Posted by {{ $post->user->firstname }} {{ $post->user->lastname }}</span>
+            <a href="{{ route('view/post', $post->id) }}" class="font-medium text-base hover:underline">{{ $post->title }}</a>
+            <span class="block font-bold text-sm text-slate-500 mt-2">Posted by {{ ucfirst($post->user->firstname) }} {{ ucfirst($post->user->lastname) }}</span>
           </div>
         </div>
 
@@ -28,13 +34,22 @@
               <i class="bi bi-chat-square-dots"></i>
             </div>
             <div class="post-comment-title pe-5 py-5">
-              <span class="comment-username block text-base font-semibold mb-3">{{ $comment->user->firstname }} {{ $comment->user->lastname }}</span>
-              <a href="#" class="comment block text-base hover:underline">{{ $comment->comment }}</a>
-              <div class="relative">
-                <button class="comment-action-btn mt-2"><i class="bi bi-three-dots text-lg"></i></button>
-                <div class="absolute hidden bg-white border border-slate-300 rounded py-2">
-                  <a href="#" class="block py-2 px-4 hover:bg-gray-200 hover:cursor-pointer">Delete comment</a>
+
+              <!-- Comment source name -->
+              <span class="comment-username block text-base font-semibold mb-3">{{ ucfirst($comment->user->firstname) }} {{ ucfirst($comment->user->lastname) }}</span>
+              <!-- Comment text -->
+              <span class="comment block text-base">{{ $comment->comment }}</span>
+              <!-- Action button -->
+              <div class="action relative" data-action-id="{{ $comment->id }}">
+                <i class="bi bi-three-dots"></i>
+                <div class="absolute hidden flex flex-col shadow-2xl bg-white border border-slate-300 py-5 rounded w-[200px] z-40">
+                  <form action="{{ route('comment.delete', $comment) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-start p-3 bg-gray-100 hover:bg-gray-200 hover:cursor-pointer w-full">Delete</button>
+                  </form>
                 </div>
+
               </div>
             </div>
           </div>
@@ -50,5 +65,8 @@
 
   </div>
 </section>
+
+<!-- For comment dropdown aswell -->
+<script src="{{ asset('js/userPostActions.js')}}"></script>
 
 @include('layouts/bottom')

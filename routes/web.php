@@ -43,19 +43,26 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/profile', [UserController::class, 'profile']);
     Route::put('/profile/update', [UserController::class, 'profileUpdate']);
     
+    // Posts
     Route::get('/add/post', [PostController::class, 'index']);
     Route::post('/add/title/post', [PostController::class, 'createTitlePost']);
     Route::post('/add/image/post', [PostController::class, 'createImagePost']);
     Route::post('/add/link/post', [PostController::class, 'createLinkPost']);
     Route::get('/view/{post_id}/post', [PostController::class, 'viewPost'])->name('view/post');
+    Route::delete('delete/{post}/post', [PostController::class, 'delete'])->name('post.delete');
+    
+    // Comments
     Route::post('/add/comment/{post_id}', [CommentController::class, 'storeComment']);
+    Route::delete('/delete/comment/{comment}', [CommentController::class, 'delete'])->name('comment.delete');
 
+    // Dashboard
     Route::get('/dashboard/posts', [DashboardController::class, 'posts']);
     Route::get('/dashboard/comments', [DashboardController::class, 'comments']);
     Route::get('/dashboard/saved', [DashboardController::class, 'saved']);
     Route::get('/dashboard/upvoted', [DashboardController::class, 'upvoted']);
     Route::get('/dashboard/downvoted', [DashboardController::class, 'downvoted']);
 
+    // Users
     Route::get('change/password', [UserController::class, 'changePasswordView']);
     Route::post('change/password', [UserController::class, 'changePassword']);
 
@@ -64,5 +71,5 @@ Route::middleware(['auth'])->group(function() {
 
     // Save
     Route::post('/posts/save', [SaveController::class, 'save'])->name('posts.save');
-    // Route::delete('/posts/{post}/save', [SaveController::class, 'unsave'])->name('posts.unsave');
+
 });
