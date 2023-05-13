@@ -10,7 +10,7 @@
 
   <!-- Profile pic, name -->
   <div class="container mx-auto px-6">
-    <div class="flex items-center">
+    <div class="flex">
       <div class="user-photo-wrap relative bg-cover bg-no-repeat" style="background-image: url({{asset('storage/profile_pic/' . $user->photo)}});">
           @if(!empty($user->photo))
             <img src="{{asset('storage/profile_pic/'. $user->photo)}}" class="peer user-photo" width="163" height="163" alt="user photo">
@@ -19,7 +19,23 @@
           @endif
       </div>
       <div class="flex flex-col space-y-2 profile-details ms-5">
-        <h1 class="text-2xl font-medium">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
+        <div class="flex space-x-4 items-center">
+          <h1 class="text-2xl font-medium inline">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
+          @if($user->id != Auth::user()->id)
+            @if(Auth::user()->following->contains($user->id))
+                <form action="{{ route('unfollow', $user->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-slate-300 text-slate-800 py-2 px-5 rounded-sm text-white text-sm font-semibold">Following</button>
+                </form>
+            @else
+                <form action="{{ route('follow', $user->id) }}" method="post">
+                    @csrf
+                    <button type="submit" class="bg-sky-500 text-slate-200 py-2 px-5 rounded-sm text-white text-sm font-semibold">Follow</button>
+                </form>
+            @endif
+          @endif
+        </div>
         <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
       </div>
     </div>
@@ -112,7 +128,9 @@
       </div>
     </div>
   @empty
-      <div>No posts found.</div>
+    <div class="flex flex-col h-screen mt-3">
+        <div class="bg-yellow-100 p-4"><p>Sorry, there's nothing to see here. Looks like the user haven't made a post yet.</p></div>
+    </div>
   @endforelse
 
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\SaveController;
+use App\Http\Controllers\FollowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +74,9 @@ Route::middleware(['auth'])->group(function() {
 
     // Save
     Route::post('/posts/save', [SaveController::class, 'save'])->name('posts.save');
+
+    // Follow
+    Route::post('/users/{id}/follow', [FollowController::class, 'follow'])->name('follow');
+    Route::delete('/users/{id}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
 
 });

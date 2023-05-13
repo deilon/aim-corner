@@ -40,7 +40,7 @@
       </div>
       <div class="post-details py-7 pe-7">
         <!-- Post user name -->
-        <div class="post-user text-sm mb-4">Posted by <a href="#" class="font-semibold hover:underline">{{$post->user->firstname .' '. $post->user->lastname}}</a></div>
+        <div class="post-user text-sm mb-4">Posted by <a href="{{ route('view.profile', $post->user) }}" class="font-semibold hover:underline">{{$post->user->firstname .' '. $post->user->lastname}}</a></div>
         
         <!-- Post title -->
         <div class="post-title font-semibold text-xl"><a href="{{url('view/'.$post->id.'/post')}}" class="hover:cursor-pointer">{{$post->title}}</a></div>

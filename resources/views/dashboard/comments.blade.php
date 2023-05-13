@@ -23,7 +23,7 @@
           </div>
           <div class="post-source-main-title pe-5 py-5">
             <a href="{{ route('view/post', $post->id) }}" class="font-medium text-base hover:underline">{{ $post->title }}</a>
-            <span class="block font-bold text-sm text-slate-500 mt-2">Posted by {{ ucfirst($post->user->firstname) }} {{ ucfirst($post->user->lastname) }}</span>
+            <span class="block font-bold text-sm text-slate-500 mt-2">Posted by <a href="{{ route('view.profile', $post->user) }}">{{ ucfirst($post->user->firstname) }} {{ ucfirst($post->user->lastname) }}</a></span>
           </div>
         </div>
 
