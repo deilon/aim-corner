@@ -67,11 +67,10 @@
           <div class="save">
             <button type="submit" class="save-post-btn hover:cursor-pointer" data-post-id="{{$post->id}}" data-route-url="{{ route('posts.save') }}">
               @if(Auth::user()->saves()->where('post_id', $post->id)->exists())
-                <i class="save-icon bi bi-bookmark-fill mr-1"></i>
+                <i class="save-icon bi bi-bookmark-fill mr-1"></i> <span>Saved</span>
               @else 
-                <i class="save-icon bi bi-bookmark mr-1"></i>
+                <i class="save-icon bi bi-bookmark mr-1"></i> <span>Save</span>
               @endif
-              <span>Save</span>
             </button>
           </div>
           <div class="time"><i class="bi bi-clock mr-1"></i> {{ $post->created_at->diffForHumans() }}</div>
