@@ -12,7 +12,7 @@ class DashboardController extends Controller
     //
 
     public function posts() {
-        $data['posts'] = Auth::user()->post()->orderBy('created_at', 'desc')->get();
+        $data['posts'] = Auth::user()->posts()->orderBy('created_at', 'desc')->get();
         return view('dashboard/posts', $data);
     }
 

@@ -39,9 +39,11 @@ Route::middleware(['guest'])->group(function() {
 Route::get('logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function() {
+    // Profile
     Route::get('/feed/{post}/posts', [FeedController::class, 'index'])->name('all/feed');
     Route::get('/profile', [UserController::class, 'profile']);
     Route::put('/profile/update', [UserController::class, 'profileUpdate']);
+    Route::get('/profile/user/{user}', [UserController::class, 'viewProfile'])->name('view.profile');
     
     // Posts
     Route::get('/add/post', [PostController::class, 'index']);

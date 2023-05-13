@@ -1,34 +1,30 @@
-@include('Layouts.top')
+@include('layouts/top')
 
-@if (session('welcome_message'))
-    <div class="p-4 bg-lime-200 rounded-md border-slate-300">
-        {{ session('welcome_message') }}
-    </div>
-@endif
 @if (session('success'))
     <div class="p-4 bg-lime-200 rounded-md border-slate-300">
         {{ session('success') }}
     </div>
 @endif
 
+<div class="profile-body py-10">
 
-<section id="feed-nav" class="mt-5 font-medium">
+  <!-- Profile pic, name -->
   <div class="container mx-auto px-6">
-    <div class="flex items-center space-x-10 bg-white border border-slate-300 rounded-md px-6">
-      <a href="#" class="py-5 pe-2 border-b-2 border-black"><i class="bi bi-house-fill mr-2"></i> For you</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-asterisk mr-2"></i> Show all</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-people-fill mr-2"></i> Following</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-mortarboard-fill mr-2"></i> Students</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-person-fill mr-2"></i> Instructors</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-person-badge-fill mr-2"></i> Administrators</a>
+    <div class="flex items-center">
+      <div class="user-photo-wrap relative bg-cover bg-no-repeat" style="background-image: url({{asset('storage/profile_pic/' . $user->photo)}});">
+          @if(!empty($user->photo))
+            <img src="{{asset('storage/profile_pic/'. $user->photo)}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @else
+            <img src="{{asset('storage/profile_pic/default.jpg')}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @endif
+      </div>
+      <div class="flex flex-col space-y-2 profile-details ms-5">
+        <h1 class="text-2xl font-medium">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
+        <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
+      </div>
     </div>
-  </div>
-</section>
 
-<section id="feed-posts" class="mt-5">
-  <div class="container mx-auto px-6">
-    
-  @forelse($posts as $post)
+    @forelse($user->posts as $post)
     <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
       
       @if ($post->user->role == "student")
@@ -119,10 +115,12 @@
       <div>No posts found.</div>
   @endforelse
 
+
   </div>
-</section>
+
+</div>
 
 <script src="{{ asset('js/postActions.js')}}"></script>
 <script src="{{ asset('js/userPostActions.js')}}"></script>
 
-@include('Layouts.bottom')
+@include('layouts/bottom')

@@ -77,31 +77,30 @@
 
 </div>
 
-    <!-- jQuery CDN source -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        
-        var readURL = function(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+<script>
+  $(document).ready(function() {
+    
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('.user-photo').attr('src', e.target.result);
-                }
-        
-                reader.readAsDataURL(input.files[0]);
+            reader.onload = function (e) {
+                $('.user-photo').attr('src', e.target.result);
             }
+    
+            reader.readAsDataURL(input.files[0]);
         }
-        
+    }
+    
 
-        $(".photo-upload").on('change', function(){
-            readURL(this);
-        });
-        
-        $(".upload-button").on('click', function() {
-          $(".photo-upload").click();
-        });
-      });
-    </script>
+    $(".photo-upload").on('change', function(){
+        readURL(this);
+    });
+    
+    $(".upload-button").on('click', function() {
+      $(".photo-upload").click();
+    });
+  });
+</script>
+
 @include('layouts/bottom')
