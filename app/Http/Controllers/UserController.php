@@ -108,7 +108,9 @@ class UserController extends Controller
     }
 
     public function viewProfile(User $user) {
-        $data['user'] = User::with('posts')->find($user->id);;
+        $data['user'] = User::with(['posts' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->find($user->id);
         return view('profile_view', $data);
     }
 }
