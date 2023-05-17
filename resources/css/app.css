@@ -49,3 +49,9 @@ nav {
 .downvoted {
     color: rgb(65, 65, 207);
 }
+
+/* For unavailable links/anchor tags */
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+  }
