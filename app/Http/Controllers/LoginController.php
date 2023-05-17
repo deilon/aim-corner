@@ -14,18 +14,22 @@ class LoginController extends Controller
     }
 
     public function authenticateUsers(Request $request) {
-        $credentials = $request->only('email', 'password');
-        $credentials['email'] = strtolower($credentials['email']);
-        $credentials['password'] = strtolower($credentials['password']);
+        $credentials = $request->only('user', 'password');
+        $loginField = filter_var($credentials['user'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if (Auth::attempt($credentials, $request->has('remember'))) {
+        $validatedCredentials = [
+            $loginField => $credentials['user'],
+            'password' => $credentials['password'],
+        ];
+
+        if (Auth::attempt($validatedCredentials, $request->has('remember'))) {
             $request->session()->regenerate();
-    
+
             return redirect()->intended('/feed/all');
         }
-    
+
         return back()->withErrors([
-            'email' => 'Invalid email or password.',
+            'error_login' => 'Invalid credentials. Please check your username/email and password.',
         ])->withInput();
     }
 }

@@ -15,9 +15,9 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col col-lg-6 offset-lg-3">
-                    @if ($errors->has('email'))
+                    @if ($errors->has('error_login'))
                         <div class="p-3 my-3 bg-danger text-white">
-                            {{ $errors->first('email') }}
+                            {{ $errors->first('error_login') }}
                         </div>
                     @endif
                     <div class="d-flex mb-5 justify-content-between">
@@ -27,8 +27,8 @@
                     <form method="POST" action="{{url('login')}}">
                         @csrf
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email address or username</label>
-                            <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}">
+                            <label for="user" class="form-label">Email address or username</label>
+                            <input type="text" class="form-control" name="user" id="user" value="{{ old('user') }}">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
