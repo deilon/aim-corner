@@ -57,7 +57,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect('feed/all/posts');
+        return redirect('feed/all');
     }
 
     public function storeInstructor(Request $request)
@@ -95,7 +95,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect('feed/all/posts');
+        return redirect('feed/all');
     }
     
 }

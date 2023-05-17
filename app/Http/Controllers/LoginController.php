@@ -21,7 +21,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
     
-            return redirect()->intended('/feed/all/posts');
+            return redirect()->intended('/feed/all');
         }
     
         return back()->withErrors([

@@ -24,7 +24,7 @@
       <div class="flex flex-col space-y-2 profile-details ms-5">
         <h1 class="text-2xl font-medium">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
         <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
-        <a href="{{url('change/password')}}" class="text-red-500 font-medium hover:underline">Change password <i class="bi bi-pencil-square"></i></a>
+        <a href="{{ url('change/password') }}" class="text-red-500 font-medium hover:underline">Change password <i class="bi bi-pencil-square"></i></a>
       </div>
     </d>
   </div>

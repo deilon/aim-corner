@@ -15,12 +15,12 @@
 <section id="feed-nav" class="mt-5 font-medium">
   <div class="container mx-auto px-6">
     <div class="flex items-center space-x-10 bg-white border border-slate-300 rounded-md px-6">
-      <a href="#" class="py-5 pe-2 border-b-2 border-black"><i class="bi bi-house-fill mr-2"></i> For you</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-asterisk mr-2"></i> Show all</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-people-fill mr-2"></i> Following</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-mortarboard-fill mr-2"></i> Students</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-person-fill mr-2"></i> Instructors</a>
-      <a href="#" class="py-5 pe-2"><i class="bi bi-person-badge-fill mr-2"></i> Administrators</a>
+      <!-- <a href="{{ url('feed/all') }}" class="py-5 pe-2 border-b-2 border-black"><i class="bi bi-house-fill mr-2"></i> For you</a> -->
+      <a href="{{ url('feed/all') }}" class="py-5 pe-2 {{ request()->routeIs('all/posts') ? 'border-b-2 border-black' : '' }}"><i class="bi bi-asterisk mr-2"></i> Show all</a>
+      <a href="{{ url('feed/following') }}" class="py-5 pe-2 {{ request()->routeIs('following/posts') ? 'border-b-2 border-black' : '' }}"><i class="bi bi-people-fill mr-2"></i> Following</a>
+      <a href="{{ url('feed/student') }}" class="py-5 pe-2 {{ request()->routeIs('students/posts') ? 'border-b-2 border-black' : '' }}"><i class="bi bi-mortarboard-fill mr-2"></i> Students</a>
+      <a href="{{ url('feed/instructor') }}" class="py-5 pe-2 {{ request()->routeIs('instructors/posts') ? 'border-b-2 border-black' : '' }}"><i class="bi bi-person-fill mr-2"></i> Instructors</a>
+      <a href="{{ url('feed/admin') }}" class="py-5 pe-2 {{ request()->routeIs('admin/posts') ? 'border-b-2 border-black' : '' }}"><i class="bi bi-person-badge-fill mr-2"></i> Administrators</a>
     </div>
   </div>
 </section>
@@ -116,7 +116,9 @@
       </div>
     </div>
   @empty
-      <div>No posts found.</div>
+    <div class="flex flex-col h-screen mt-3">
+        <div class="bg-yellow-100 p-4"><p>Sorry, there's nothing to see here. Looks like the users haven't made a post yet.</p></div>
+    </div>
   @endforelse
 
   </div>

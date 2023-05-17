@@ -24,8 +24,8 @@
 
     <div class="flex justify-between items-center">
       <div class="flex space-x-5 items-center">
-        <a href="{{ url('feed/all/posts') }}" class="mr-5"><img src="http://localhost:8000/images/logo-dark.svg" alt="logo" width="60"></a>
-        <a href="{{ url('feed/all/posts') }}" class="border-b-2 border-black py-2">Home</a>
+        <a href="{{ url('feed/all') }}" class="mr-5"><img src="http://localhost:8000/images/logo-dark.svg" alt="logo" width="60"></a>
+        <a href="{{ url('feed/all') }}" class="border-b-2 border-black py-2">Home</a>
         <a href="{{ url('profile') }}">Profile</a>
         <a href="{{ url('dashboard/posts') }}">Dashboard</a>
         <a href="{{ url('control-panel') }}">Control panel</a>

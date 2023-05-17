@@ -40,8 +40,14 @@ Route::middleware(['guest'])->group(function() {
 Route::get('logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function() {
+    // Feed
+    Route::get('/feed/all', [FeedController::class, 'index'])->name('all/posts');
+    Route::get('/feed/student', [FeedController::class, 'getStudentsPosts'])->name('students/posts');
+    Route::get('/feed/instructor', [FeedController::class, 'getInstructorsPosts'])->name('instructors/posts');
+    Route::get('/feed/admin', [FeedController::class, 'getAdminsPosts'])->name('admin/posts');
+    Route::get('/feed/following', [FeedController::class, 'getFollowingPosts'])->name('following/posts');
+
     // Profile
-    Route::get('/feed/{post}/posts', [FeedController::class, 'index'])->name('all/feed');
     Route::get('/profile', [UserController::class, 'profile']);
     Route::put('/profile/update', [UserController::class, 'profileUpdate']);
     Route::get('/profile/user/{user}', [UserController::class, 'viewProfile'])->name('view.profile');
