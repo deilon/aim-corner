@@ -65,11 +65,11 @@ Route::middleware(['auth'])->group(function() {
     Route::delete('/delete/comment/{comment}', [CommentController::class, 'delete'])->name('comment.delete');
 
     // Dashboard
-    Route::get('/dashboard/posts', [DashboardController::class, 'posts']);
-    Route::get('/dashboard/comments', [DashboardController::class, 'comments']);
-    Route::get('/dashboard/saved', [DashboardController::class, 'saved']);
-    Route::get('/dashboard/upvoted', [DashboardController::class, 'upvoted']);
-    Route::get('/dashboard/downvoted', [DashboardController::class, 'downvoted']);
+    Route::get('/dashboard/posts', [DashboardController::class, 'posts'])->name('d/posts');
+    Route::get('/dashboard/comments', [DashboardController::class, 'comments'])->name('d/comments');
+    Route::get('/dashboard/saved', [DashboardController::class, 'saved'])->name('d/saved');
+    Route::get('/dashboard/upvoted', [DashboardController::class, 'upvoted'])->name('d/upvoted');
+    Route::get('/dashboard/downvoted', [DashboardController::class, 'downvoted'])->name('d/downvoted');
 
     // Users
     Route::get('change/password', [UserController::class, 'changePasswordView']);
