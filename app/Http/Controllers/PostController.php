@@ -32,13 +32,13 @@ class PostController extends Controller
         $post = new Post;
         $post->user_id = Auth::user()->id;
         $post->title = $request->input('title');
-        $post->text = $request->input('description');
+        $post->text = $request->input('text');
         $post->type = 'title';
         $post->save();
     
         // Redirect
         $request->session()->flash('success', 'Your post has been made.');
-        return redirect('feed/all/posts');
+        return redirect('feed/all');
     }
 
     public function createImagePost(Request $request)
@@ -75,7 +75,7 @@ class PostController extends Controller
 
         // Redirect
         $request->session()->flash('success', 'Your post has been made.');
-        return redirect('feed/all/posts');
+        return redirect('feed/all');
     }
 
     public function createLinkPost(Request $request)
@@ -102,48 +102,8 @@ class PostController extends Controller
     
         // Redirect
         $request->session()->flash('success', 'Your post has been made.');
-        return redirect('feed/all/posts');
+        return redirect('feed/all');
     }
-
-    public function createPost(Request $request) {
-
-        $user = Auth::user();
-
-        // Validate
-        $request->validate([
-            'title' => 'required',
-            'text' => 'sometimes',
-            'image' => 'sometimes|image|mimes:jpg,png,jpeg,gif,svg',
-            'link' => 'sometimes|url'
-        ]);
-
-        if ($request->file("image") != null) {
-            $photo_name = time().'_'.$request->file("image")->getClientOriginalName();
-            $request->file('image')->storeAs('public/images/', $photo_name);
-        }
-
-        $post = new Post;
-        $post->user_id = $user->id;
-        $post->title = $request['title'];
-
-        if ($request['link'] != null) {
-            $post->link = $request['link'];
-            $post->type = "link";
-        }
-        elseif ($request->file("image") != null) {
-            $post->image = $photo_name;
-            $post->type = "photo";
-        } else {
-            $post->text = $request['text'];
-            $post->type = "title";
-        }
-        $post->save();
-
-        return ($request->file("image") != null) ? 
-        back()->with('status', 'A post has been made.')->with('post_upload', 'The photo attached to the post has been uploaded but due to free hosting limitation we are unable to preview your photo at the moment.') : 
-        back()->with('status', 'A post has been made.');        
-    }
-
 
     public function viewPost($post_id) {
         $data['post'] = Post::find($post_id);
