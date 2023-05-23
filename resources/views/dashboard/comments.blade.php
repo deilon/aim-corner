@@ -8,13 +8,13 @@
 
 @include('layouts/dashboardnav')
 
-<section id="dashboard-comments" class="mt-5">
+<section class="pt-[20px] md:pt-[140px] md:ml-20">
   <div class="container mx-auto px-6">
   
     <!-- item -->
     @forelse($posts as $post)
     
-      <div class="flex flex-col w-full mb-5 bg-white border border-slate-300 divide-y divide-slate-200 rounded-md">
+      <div class="flex flex-col w-full md:w-9/12 lg:w-8/12 md:mx-auto mb-5 bg-white border border-slate-300 divide-y divide-slate-200 rounded-md">
 
         <!-- post source -->
         <div class="post-source flex items-center">
@@ -68,5 +68,7 @@
 
 <!-- For comment dropdown aswell -->
 <script src="{{ asset('js/userPostActions.js')}}"></script>
+
+<script src="{{ asset('js/navSmallToggle.js')}}"></script>
 
 @include('layouts/bottom')

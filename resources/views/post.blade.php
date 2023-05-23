@@ -1,16 +1,19 @@
 @include('layouts/top')
-@if ($errors->any())
-    <div class="p-4 bg-red-500 border-slate-300 text-white">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li><i class="bi bi-dot"></i> {{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-<div class="create-post-body py-10">
+
+<div class="create-post-body py-10 pt-[130px]">
     <div class="container mx-auto px-6">
-        <div class="w-8/12">
+
+    @if ($errors->any())
+        <div class="p-4 bg-red-500 border-slate-300 text-white w-full">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><i class="bi bi-dot"></i> {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+        <div class="w-full md:w-8/12">
             <div class="py-3 border-b border-gray-300">
                 Create post
             </div>

@@ -1,11 +1,11 @@
 @include('layouts/top')
 
-<section class="mt-5">
+<section class="pt-[130px] md:pt-[140px]">
   <div class="container mx-auto px-6">
     
 
   <div class="flex">
-  <div class="relative flex w-8/12 mx-auto mb-5 bg-white border border-slate-300">
+  <div class="relative flex w-full md:w-9/12 lg:w-8/12 md:mx-auto mb-5 bg-white border border-slate-300">
       <span class="absolute -top-2 right-5 user-role-post-label user-role-red"></span>
       <div class="vote-controls flex flex-col items-center py-10 px-5">
         <!-- Upvote button -->

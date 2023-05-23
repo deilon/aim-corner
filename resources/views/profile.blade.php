@@ -1,15 +1,16 @@
 @include('layouts/top')
 
-@if (session('success'))
-    <div class="p-4 bg-lime-200 rounded-md border-slate-300">
-        {{ session('success') }}
-    </div>
-@endif
-
-<div class="profile-body py-10">
+<div class="profile-body py-10 pt-[130px] md:pt-[140px]">
 
   <!-- Profile pic, name -->
   <div class="container mx-auto px-6">
+
+  @if (session('success'))
+    <div class="p-4 w-full bg-lime-200 mb-10 rounded-md border-slate-300">
+        {{ session('success') }}
+    </div>
+  @endif
+
     <d class="flex items-center">
       <div class="user-photo-wrap relative bg-cover bg-no-repeat" style="background-image: url({{asset('storage/profile_pic/' . $user->photo)}});">
           @if(!empty($user->photo))
@@ -29,9 +30,9 @@
     </d>
   </div>
 
-  <!-- Basci info -->
+  <!-- Basic info -->
   <div class="container mx-auto mt-10 px-6 profile-edit">
-    <div class="w-7/12">
+    <div class="w-full md:w-7/12">
       <form action="{{ url('profile/update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
