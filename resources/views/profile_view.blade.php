@@ -38,7 +38,7 @@
             @endif
           @endif
         </div>
-        <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
+        <span class="user-role-title font-medium">{{ ucwords($user->role) }} @if($user->role === 'student') {{ ' (' . $user->course . ')' }} @endif</span>
       </div>
     </div>
 
