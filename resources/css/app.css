@@ -6,11 +6,6 @@ body {
     background-color: #F4F4F4;
 
 }
-nav {
-    box-shadow: 0px -2px 18px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 0px -2px 18px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0px -2px 18px rgba(0, 0, 0, 0.25);
-}
 
 .vote-controls button {
     font-size: 40px;
@@ -41,3 +36,17 @@ nav {
 .post-link {
     color: #00344A;
 }
+
+.upvoted {
+    color: rgb(145, 50, 50);
+}
+
+.downvoted {
+    color: rgb(65, 65, 207);
+}
+
+/* For unavailable links/anchor tags */
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+  }

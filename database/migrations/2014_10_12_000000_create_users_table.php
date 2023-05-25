@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('firstname', 100);
             $table->string('middlename', 100)->nullable();
             $table->string('lastname', 100);
-            $table->string('photo', 255);
+            $table->string('photo', 255)->nullable();
             $table->string('course', 100)->nullable();
             $table->string('country', 100);
             $table->string('city', 100);

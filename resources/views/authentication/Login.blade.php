@@ -15,15 +15,20 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col col-lg-6 offset-lg-3">
+                    @if ($errors->has('error_login'))
+                        <div class="p-3 my-3 bg-danger text-white">
+                            {{ $errors->first('error_login') }}
+                        </div>
+                    @endif
                     <div class="d-flex mb-5 justify-content-between">
                         <h4 class="align-self-center text-center">Welcome to Aim Corner</h4>
                         <img src="{{ asset('images/logo-dark.png') }}" alt="logo" class="img-responsive" height="70px">
                     </div>
-                    <form method="POST" action="/login">
+                    <form method="POST" action="{{url('login')}}">
                         @csrf
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email address or username</label>
-                            <input type="text" class="form-control" name="email" id="email">
+                            <label for="user" class="form-label">Email address or username</label>
+                            <input type="text" class="form-control" name="user" id="user" value="{{ old('user') }}">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
@@ -35,7 +40,8 @@
                                 <label class="form-check-label" for="remember">Remember me</label>
                             </div>
                             <div class="mb-3">
-                                <a href="#">Forgot password?</a>
+                                <a href="#" class="d-block">Forgot password?</a>
+                                <a href="{{ url('student/register') }}" class="d-block" >Doesn't have an account? Register.</a>
                             </div>
                         </div>
 

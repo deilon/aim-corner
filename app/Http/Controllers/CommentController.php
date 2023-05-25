@@ -8,22 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    //
-    public function createComment(Request $request) {
-        $user = Auth::user();
-
-        // Validate
-        $request->validate([
-            'comment' => 'required'
+    public function storeComment(Request $request, $post_id) {
+        $validated = $request->validate([
+            'comment' => 'required|string',
         ]);
-
-        $comment = new Comment;
-        $comment->user_id = $user->id;
-        // $comment->post_id = $comment->post->id;
-        $comment->post_id = $request->post_id;
-        $comment->comment = $request->comment;
+    
+        $comment = new Comment();
+        $comment->post_id = $post_id;
+        $comment->user_id = auth()->id();
+        $comment->comment = $validated['comment'];
         $comment->save();
-        return back()->with('status', 'A comment has been made.');     
+    
+        return redirect()->route('view/post', $post_id)
+            ->with('success', 'Comment submitted.');
+    }
 
+    public function delete(Comment $comment) {
+        $comment->delete();
+        return redirect()->back()->with('success', 'Your comment deleted successfully');
     }
 }

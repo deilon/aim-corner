@@ -1,55 +1,72 @@
 @include('layouts/top')
 
-<div class="profile-body py-10">
+<div class="profile-body py-10 pt-[130px] md:pt-[140px]">
 
   <!-- Profile pic, name -->
   <div class="container mx-auto px-6">
+
+  @if (session('success'))
+    <div class="p-4 w-full bg-lime-200 mb-10 rounded-md border-slate-300">
+        {{ session('success') }}
+    </div>
+  @endif
+
     <d class="flex items-center">
-      <img src="{{asset('images/user_photo.png')}}" width="163" alt="user photo">
+      <div class="user-photo-wrap relative bg-cover bg-no-repeat" style="background-image: url({{asset('storage/profile_pic/' . $user->photo)}});">
+          @if(!empty($user->photo))
+            <img src="{{asset('storage/profile_pic/'. $user->photo)}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @else
+            <img src="{{asset('storage/profile_pic/default.jpg')}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @endif
+          <div class="hidden absolute peer-hover:flex hover:flex w-full flex-col bg-white drop-shadow-lg">
+            <button class="px-5 py-3 hover:bg-gray-200 upload-button">Upload a photo</button>
+        </div>
+      </div>
       <div class="flex flex-col space-y-2 profile-details ms-5">
-        <h1 class="text-2xl font-medium">FirstName LastName</h1>
-        <span class="user-role-title font-medium">Administrator</span>
-        <a href="#" id="change-pass" class="text-red-500 font-medium hover:underline">Change password <i class="bi bi-pencil-square"></i></a>
-        <a href="#" id="edit-profile" class="text-green-500 font-medium hover:underline hidden">Update profile <i class="bi bi-pencil-square"></i></a>
+        <h1 class="text-2xl font-medium">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
+        <span class="user-role-title font-medium">{{ ucwords($user->role) }}</span>
+        <a href="{{ url('change/password') }}" class="text-red-500 font-medium hover:underline">Change password <i class="bi bi-pencil-square"></i></a>
       </div>
     </d>
   </div>
 
-  <!-- Basci info -->
+  <!-- Basic info -->
   <div class="container mx-auto mt-10 px-6 profile-edit">
-    <div class="w-7/12">
-      <form action="">
+    <div class="w-full md:w-7/12">
+      <form action="{{ url('profile/update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         <div class="flex flex-col">
           <!-- User info -->
           <div class="input-and-label mb-10">
             <label for="firstname" class="font-medium">First name</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="firstname" id="firstname">
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="firstname" id="firstname" value="{{ old('firstname', ucwords($user->firstname)) }}">
+            @error('firstname')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
           <div class="input-and-label mb-10">
             <label for="lastname" class="font-medium">Last name</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="lastname" id="lastname">
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="lastname" id="lastname" value="{{ old('lastname', ucwords($user->lastname)) }}">
+            @error('lastname')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
           <div class="input-and-label mb-10">
             <label for="middlename" class="font-medium">Middle name</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="middlename" id="middlename">
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="middlename" id="middlename" value="{{ old('middlename', ucwords($user->middlename)) }}">
+            @error('middlename')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
           <div class="input-and-label mb-10">
             <label for="email" class="font-medium">Email</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="email" id="email">
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="email" id="email" value="{{ old('email', $user->email) }}">
+            @error('email')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
           <div class="input-and-label mb-10">
             <label for="username" class="font-medium">Username</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="username" id="username">
-          </div> <br> <br>
-
-          <!-- Location -->
-          <div class="input-and-label mb-10">
-            <label for="city" class="font-medium">City / Town</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="city" id="city">
+            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="username" id="username" value="{{ old('username', $user->username) }}">
+            @error('username')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
-          <div class="input-and-label mb-10">
-            <label for="country" class="font-medium">Country</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="country" id="country">
+          <div class="input-and-label mb-10 hidden">
+            <label for="photo" class="font-medium">Upload profile photo</label> <br>
+            <input type="file" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full photo-upload" name="photo" id="photo" value="{{ old('photo', $user->photo) }}">
+            @error('photo')<div class="text-red-600 pt-3">{{ $message }}</div>@enderror
           </div>
           <button type="submit" class="bg-green-700 py-2 font-bold text-white rounded">Update Profile</button>
         </div>
@@ -58,32 +75,33 @@
   </div>
 
 
-  <!-- Change password -->
-  <div class="container mx-auto mt-10 px-6 hidden change-pass-edit">
-    <div class="w-7/12">
-      <form action="">
-        <div class="flex flex-col">
-          <!-- User info -->
-          <div class="input-and-label mb-10">
-            <label for="currentpassword" class="font-medium">Current password</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="currentpassword" id="currentpassword">
-          </div>
-          <div class="input-and-label mb-10">
-            <label for="newpassword" class="font-medium">New password</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="newpassword" id="newpassword">
-          </div>
-          <div class="input-and-label mb-10">
-            <label for="confirmpassword" class="font-medium">Confirm new password</label> <br>
-            <input type="text" class="h-9 mt-2 border-1 border-slate-200 shadow-lg w-full" name="confirmpassword" id="confirmpassword">
-          </div>
-          <button type="submit" class="bg-red-700 py-2 font-bold text-white rounded">Change Password</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-
 
 </div>
+
+<script>
+  $(document).ready(function() {
+    
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.user-photo').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+    $(".photo-upload").on('change', function(){
+        readURL(this);
+    });
+    
+    $(".upload-button").on('click', function() {
+      $(".photo-upload").click();
+    });
+  });
+</script>
 
 @include('layouts/bottom')

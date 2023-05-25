@@ -1,47 +1,49 @@
-@include('Layouts.top')
+@include('layouts/top')
 
-<!-- Nav medium screens -->
-<section class="fixed h-screen bg-white p-10 pt-[150px] font-medium hidden md:block">
-  <!-- <a href="{{ url('feed/all') }}" class="py-5 pe-2 border-b-2 border-black"><i class="bi bi-house-fill mr-2"></i> For you</a> -->
-  <a href="{{ url('feed/all') }}" class="block py-5 pe-2 {{ request()->routeIs('all/posts') ? 'text-red-600' : '' }}"><i class="bi bi-asterisk mr-2"></i> <span class="hidden lg:inline-block">Show all</span></a>
-  <a href="{{ url('feed/following') }}" class="block py-5 pe-2 {{ request()->routeIs('following/posts') ? 'text-red-600' : '' }}"><i class="bi bi-people-fill mr-2"></i> <span class="hidden lg:inline-block">Following</span></a>
-  <a href="{{ url('feed/student') }}" class="block py-5 pe-2 {{ request()->routeIs('students/posts') ? 'text-red-600' : '' }}"><i class="bi bi-mortarboard-fill mr-2"></i> <span class="hidden lg:inline-block">Students</span></a>
-  <a href="{{ url('feed/instructor') }}" class="block py-5 pe-2 {{ request()->routeIs('instructors/posts') ? 'text-red-600' : '' }}"><i class="bi bi-person-fill mr-2"></i> <span class="hidden lg:inline-block">Instructors</span></a>
-  <a href="{{ url('feed/admin') }}" class="block py-5 pe-2 {{ request()->routeIs('admin/posts') ? 'text-red-600' : '' }}"><i class="bi bi-person-badge-fill mr-2"></i> <span class="hidden lg:inline-block">Administrators</span></a>
-</section>
+<div class="profile-body py-10 pt-[140px]">
 
-<!-- Nav small screens -->
-<section class="sticky top-0 bg-white border-b border-slate-300 w-full px-5 py-2 pt-[130px] font-medium z-10 md:hidden">
-  <button class="nav-sm py-5 pe-2 w-full text-start {{ request()->routeIs('all/posts') ? 'text-red-600 block' : 'hidden' }}"><i class="bi bi-asterisk mr-2"></i> Show all</button>
-  <button class="nav-sm py-5 pe-2 w-full text-start {{ request()->routeIs('following/posts') ? 'text-red-600 block' : 'hidden' }}"><i class="bi bi-people-fill mr-2"></i> Following</button>
-  <button class="nav-sm py-5 pe-2 w-full text-start {{ request()->routeIs('students/posts') ? 'text-red-600 block' : 'hidden' }}"><i class="bi bi-mortarboard-fill mr-2"></i> Students</button>
-  <button class="nav-sm py-5 pe-2 w-full text-start {{ request()->routeIs('instructors/posts') ? 'text-red-600 block' : 'hidden' }}"><i class="bi bi-person-fill mr-2"></i> Instructors</button>
-  <button class="nav-sm py-5 pe-2 w-full text-start {{ request()->routeIs('admin/posts') ? 'text-red-600 block' : 'hidden' }}"><i class="bi bi-person-badge-fill mr-2"></i> Administrators</button>
-    <div class="collapsible-nav-sm hidden">
-      <a href="{{ url('feed/all') }}" class="py-5 pe-2 {{ request()->routeIs('all/posts') ? 'hidden' : 'block' }}"><i class="bi bi-asterisk mr-2"></i> Show all</a>
-      <a href="{{ url('feed/following') }}" class="py-5 pe-2 {{ request()->routeIs('following/posts') ? 'hidden' : 'block' }}"><i class="bi bi-people-fill mr-2"></i> Following</a>
-      <a href="{{ url('feed/student') }}" class="py-5 pe-2 {{ request()->routeIs('students/posts') ? 'hidden' : 'block' }}"><i class="bi bi-mortarboard-fill mr-2"></i> Students</a>
-      <a href="{{ url('feed/instructor') }}" class="py-5 pe-2 {{ request()->routeIs('instructors/posts') ? 'hidden' : 'block' }}"><i class="bi bi-person-fill mr-2"></i> Instructors</a>
-      <a href="{{ url('feed/admin') }}" class="py-5 pe-2 {{ request()->routeIs('admin/posts') ? 'hidden' : 'block' }}"><i class="bi bi-person-badge-fill mr-2"></i> Administrators</a>  
-    </div>
-</section>
+  <!-- Profile pic, name -->
+  <div class="container mx-auto px-6">
 
-<section class="pt-[20px] md:pt-[140px] md:ml-20">
-  <div class="container mx-auto md:px-6">
-    
-  @if (session('welcome_message'))
-    <div class="p-4 bg-lime-200 rounded-md border-slate-300 w-full md:w-8/12 md:mx-auto mb-5">
-        {{ session('welcome_message') }}
-    </div>
-  @endif
-  @if (session('success'))
-      <div class="p-4 bg-lime-200 rounded-md border-slate-300 w-full md:w-8/12 md:mx-auto mb-5">
-          {{ session('success') }}
+    @if (session('success'))
+        <div class="p-4 bg-lime-200 rounded-md border-slate-300">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="flex">
+      <div class="user-photo-wrap relative bg-cover bg-no-repeat" style="background-image: url({{asset('storage/profile_pic/' . $user->photo)}});">
+          @if(!empty($user->photo))
+            <img src="{{asset('storage/profile_pic/'. $user->photo)}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @else
+            <img src="{{asset('storage/profile_pic/default.jpg')}}" class="peer user-photo" width="163" height="163" alt="user photo">
+          @endif
       </div>
-  @endif
 
-  @forelse($posts as $post)
-    <div class="relative flex w-full md:w-9/12 lg:w-8/12 md:mx-auto mb-5 bg-white border border-slate-300">
+      <div class="flex flex-col space-y-2 profile-details ms-5">
+        <div class="flex space-x-4 items-center">
+          <h1 class="text-2xl font-medium inline">{{ ucwords($user->firstname .' '. $user->lastname) }}</h1>
+          @if($user->id != Auth::user()->id)
+            @if(Auth::user()->following->contains($user->id))
+                <form action="{{ route('unfollow', $user->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-slate-300 text-slate-800 py-2 px-5 rounded-sm text-white text-sm font-semibold">Following</button>
+                </form>
+            @else
+                <form action="{{ route('follow', $user->id) }}" method="post">
+                    @csrf
+                    <button type="submit" class="bg-sky-500 text-slate-200 py-2 px-5 rounded-sm text-white text-sm font-semibold">Follow</button>
+                </form>
+            @endif
+          @endif
+        </div>
+        <span class="user-role-title font-medium">{{ ucwords($user->role) }} @if($user->role === 'student') {{ ' (' . $user->course . ')' }} @endif</span>
+      </div>
+    </div>
+
+    @forelse($user->posts as $post)
+    <div class="relative flex w-full md:w-9/12 lg:w-8/12 mt-10 mb-5 bg-white border border-slate-300">
       
       @if ($post->user->role == "student")
       <span class="absolute -top-2 right-5 user-role-post-label user-role-green"></span>
@@ -152,16 +154,17 @@
       </div>
     </div>
   @empty
-    <div class="w-8/12 mx-auto h-screen mt-3">
-        <div class="bg-yellow-100 p-4"><p>Sorry, there's nothing to see here. Looks like the users haven't made a post yet.</p></div>
+    <div class="flex flex-col h-screen mt-3">
+        <div class="bg-yellow-100 p-4"><p>Sorry, there's nothing to see here. Looks like the user haven't made a post yet.</p></div>
     </div>
   @endforelse
 
+
   </div>
-</section>
+
+</div>
 
 <script src="{{ asset('js/postActions.js')}}"></script>
 <script src="{{ asset('js/userPostActions.js')}}"></script>
-<script src="{{ asset('js/navSmallToggle.js')}}"></script>
 
-@include('Layouts.bottom')
+@include('layouts/bottom')
